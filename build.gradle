@@ -1,0 +1,33 @@
+apply plugin: "java"
+apply plugin: "checkstyle"
+apply plugin: "application"
+defaultTasks "jar"
+
+mainClassName = "fxapp.MainFXApplication"
+
+checkstyle {
+    configFile = new File("config/checkstyle/", "cs1331-checkstyle.xml")
+}
+
+repositories {
+    flatDir {
+        dirs "./lib"
+    }
+    mavenCentral()
+}
+
+dependencies {
+    // no dependencies atm
+}
+
+jar {
+    from("src/main/java") {
+        include "**/*.fxml"
+    }
+    manifest {
+        attributes(
+            "Main-Class": "fxapp.MainFXApplication",
+            "Class-Path": ""
+        )
+    }
+}
