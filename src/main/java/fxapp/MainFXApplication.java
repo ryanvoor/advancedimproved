@@ -1,6 +1,6 @@
 package fxapp;
 
-import controller.WelcomeScreenController;
+import model.Map;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -29,29 +29,21 @@ public class MainFXApplication extends Application {
     @Override
     public void start(Stage primaryStage) {
         mainScreen = primaryStage;
-        showWelcomeScreen(mainScreen);
+        showWelcomeScreen();
     }
 
     /**
-     * Setup our default application view that is shown on application startup
-     * This is displayed in the startup window
-     * precondition - the main stage is already initialized and
-     * showing (initRootLayout has been called)
-     * preconditions - the view is initialized and displayed
+     * TODO
      */
-    public static void showWelcomeScreen(Stage mainScreen) {
+    private static void showScreen(String fxmlFilePath) {
         try {
-            // Load welcome screen.
+            // load welcome screen.
             FXMLLoader loader = new FXMLLoader();
-            BorderPane welcomeScreen = loader.load(
-                new FileInputStream("src/main/java/view/WelcomeScreen.fxml"));
+            BorderPane screen = loader.load(
+                new FileInputStream(fxmlFilePath));
 
-            // Give the controller access to the main app.
-            WelcomeScreenController controller = loader.getController();
-
-            // Show the scene containing the root layout.
-            mainScreen.setTitle("AdvancedImproved");
-            Scene scene = new Scene(welcomeScreen);
+            // show the scene containing the root layout.
+            Scene scene = new Scene(screen);
             mainScreen.setScene(scene);
             mainScreen.show();
 
@@ -59,5 +51,30 @@ public class MainFXApplication extends Application {
             //error on load, so log it
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Setup our default application view that is shown on application startup
+     * This is displayed in the startup window
+     */
+    public static void showWelcomeScreen() {
+        showScreen("src/main/java/view/WelcomeScreen.fxml");
+        mainScreen.setTitle("AdvancedImproved");
+    }
+
+    /**
+     * shows the MapSelectScreen
+     */
+    public static void showMapSelectScreen() {
+        showScreen("src/main/java/view/MapSelectScreen.fxml");
+    }
+
+    /**
+     * shows the GameplayScreen
+     */
+    public static void showGameplayScreen(Map map) {
+        showScreen("src/main/java/view/GameplayScreen.fxml");
+        // TODO uncomment this once you set up the gameplay screen
+        //GameplayScreenController.setMap(map);
     }
 }

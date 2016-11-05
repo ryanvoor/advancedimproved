@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.fxml.FXML;
+import fxapp.MainFXApplication;
 
 /**
  * Controller for welcome screen
@@ -12,6 +13,6 @@ public class WelcomeScreenController {
      */
     @FXML
     private void welcomeScreenStartButtonPressed() {
-        System.out.println("YOU PRESSED IT CONGRATULATIONS");
+        MainFXApplication.showMapSelectScreen();
     }
 }

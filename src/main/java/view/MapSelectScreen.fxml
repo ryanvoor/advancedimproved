@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: linear-gradient(#474040,  #242323);" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MapSelectScreenController">
+   <center>
+      <Button fx:id="exampleMapSelectButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#exampleMapSelectButtonPressed" prefHeight="100.0" prefWidth="300.0" text="Example" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="39.0" />
+         </font>
+         <effect>
+            <Glow />
+         </effect>
+      </Button>
+   </center>
+   <top>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <Label prefHeight="100.0" prefWidth="700.0" text="Map Select" textFill="#43aef5">
+               <font>
+                  <Font name="Andale Mono" size="52.0" />
+               </font>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </Label>
+         </children>
+      </VBox>
+   </top>
+</BorderPane>
