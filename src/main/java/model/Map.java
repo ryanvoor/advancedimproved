@@ -96,6 +96,7 @@ public class Map {
 
                 x++;
             }
+            x = 0;
             y++;
         }
 

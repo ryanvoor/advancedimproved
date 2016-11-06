@@ -1,8 +1,13 @@
 package controller;
 
-import javafx.fxml.FXML;
 import model.Map;
 import fxapp.MainFXApplication;
+import exception.MapFileReadException;
+
+import javafx.fxml.FXML;
+
+import java.io.FileNotFoundException;
+
 
 /**
  * Controller for welcome screen
@@ -28,9 +33,12 @@ public class MapSelectScreenController {
         try {
             map = Map.buildMap(mapFilePath);
             // TODO there should be different catches for each type of error
-        } catch (Exception e) {
+        } catch (MapFileReadException e) {
             // TODO make this a user dialogue
-            System.out.println(e.getMessage());
+            System.out.println("Map File reading error: " + e.getMessage());
+            System.exit(0);
+        } catch (FileNotFoundException e) {
+            System.out.println("Map File was not found: " + e.getMessage());
             System.exit(0);
         }
         MainFXApplication.showGameplayScreen(map);

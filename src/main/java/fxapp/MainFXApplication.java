@@ -1,6 +1,7 @@
 package fxapp;
 
 import model.Map;
+import controller.GameplayScreenController;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -74,7 +75,6 @@ public class MainFXApplication extends Application {
      */
     public static void showGameplayScreen(Map map) {
         showScreen("src/main/java/view/GameplayScreen.fxml");
-        // TODO uncomment this once you set up the gameplay screen
-        //GameplayScreenController.setMap(map);
+        GameplayScreenController.setMap(map);
     }
 }
