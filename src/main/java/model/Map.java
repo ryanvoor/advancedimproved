@@ -4,6 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
+import javafx.scene.canvas.Canvas;
+
 import exception.MapFileReadException;
 
 /**
@@ -22,7 +24,36 @@ public class Map {
         this.tiles = tiles;
     }
 
-    // Map Factory methods
+    /**
+     * draws this Map on the passed in Canvas object
+     * @param canvas the Canvas object upon which we will draw this map
+     */
+    public void drawMap(Canvas canvas) {
+        // TODO this needs to be implemented
+        // possibly I should create an interator for a Map
+        // then write a draw method for Tile objects
+        // then just call the draw method on every Tile
+        // the Tile draw method will either rely on draw methods from
+        // Terrains and Occupants or it will just pull the data from
+        // those places and use it to draw itself
+        //
+        // NOTE:
+        // I might need to pass the position on the canvas that the
+        // tile should be drawn to the Tile's draw method since a Tile
+        // can't figure that out with the information that it has
+        // available.
+        //
+        // I might need a helper method in this class that
+        // calculates a position on a canvas based on size of Tile and
+        // the x,y position in the map of a Tile
+    }
+
+
+    /////////////////////////////////////
+    ////////                     ////////
+    //////// Map Factory methods ////////
+    ////////                     ////////
+    /////////////////////////////////////
 
     /**
      * builds a Map object given a path to a map file
@@ -71,8 +102,8 @@ public class Map {
         ArrayList<ArrayList<Tile>> tiles
             = new ArrayList<ArrayList<Tile>>();
         for (int i = 0; i < y; i++) {
-            /* loop y times where y is the number of
-            rows on the map from above */
+            // loop y times where y is the number of
+            // rows on the map from above
             tiles.add(i, new ArrayList<Tile>());
         }
 
@@ -136,6 +167,9 @@ public class Map {
         throws MapFileReadException {
         Terrain toBeReturned = null;
 
+        // use this switch tree to go through all the
+        // possible Terrains and convert those strings into
+        // actual Terrain objects
         switch (fileString) {
         case "p":
             toBeReturned = new Plains();
@@ -163,6 +197,10 @@ public class Map {
     private static TileOccupant getTileOccupantFromFileString(String fileString)
         throws MapFileReadException {
         TileOccupant toBeReturned = null;
+
+        // use this switch tree to go through all the
+        // possible Tile Occupants and convert those strings into
+        // actual Tile Occupant objects
         switch (fileString) {
         case "n":
             toBeReturned = null;

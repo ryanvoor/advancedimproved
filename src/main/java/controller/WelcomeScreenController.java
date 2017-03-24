@@ -4,9 +4,9 @@ import javafx.fxml.FXML;
 import fxapp.MainFXApplication;
 
 /**
- * Controller for welcome screen
+ * Controller for Welcome Screen
  */
-public class WelcomeScreenController {
+public class WelcomeScreenController extends Controller {
 
     /**
      * executes when start button is pressed

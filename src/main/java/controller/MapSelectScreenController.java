@@ -10,9 +10,9 @@ import java.io.FileNotFoundException;
 
 
 /**
- * Controller for welcome screen
+ * Controller for Map Select Screen
  */
-public class MapSelectScreenController {
+public class MapSelectScreenController extends Controller {
 
     /**
      * executes when example map select button is pressed
