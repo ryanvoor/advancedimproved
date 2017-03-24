@@ -1,5 +1,8 @@
 package model;
 
+// javafx imports
+import javafx.scene.image.Image;
+
 /**
  * TODO
  */
@@ -22,5 +25,11 @@ public class Plains extends Terrain {
         //    return ???;
         //}
         return 0;
+    }
+
+    @Override
+    public Image getImage() {
+        // TODO this is temporary for compilation purposes
+        return null;
     }
 }

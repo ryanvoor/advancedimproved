@@ -1,5 +1,8 @@
 package model;
 
+// javafx imports
+import javafx.scene.image.Image;
+
 /**
  * TODO
  */
@@ -13,14 +16,18 @@ public class Forest extends Terrain {
         // TODO anything to do here?
     }
 
-    /**
-     * TODO
-     */
+    @Override
     public int getMovementCost(TileOccupant unit) {
         // TODO
         //if (unit instanceof ???) {
         //    return ???;
         //}
         return 0;
+    }
+
+    @Override
+    public Image getImage() {
+        // TODO this is temporary for compilation purposes
+        return null;
     }
 }

@@ -38,12 +38,12 @@ public class MainFXApplication extends Application {
      * General method that shows any view passed into it
      * This method also sets the scene and returns the
      * controller for that view
-     * NOTE: does NOT initialize the controller, that must
+     * NOTE: does NOT setup the controller, that must
      * be done in the method that calls this method
-     * We don't initialize the controller in this method
+     * We don't setup the controller in this method
      * because sometimes specific controllers need to
      * perform operations or set variables etc before the
-     * initialize method is run and that ordering must be
+     * setupController method is run and that ordering must be
      * controller in the controller specific methods
      */
     private static Controller showScreen(String fxmlFilePath) {
@@ -58,13 +58,11 @@ public class MainFXApplication extends Application {
             mainScreen.setScene(scene);
             mainScreen.show();
 
-            // grab screen controller
-            Controller controller = loader.getController();
-
-            // hand controller back to the specific show
+            // grab the controller and hand it back to the specific show
             // screen method in case they need to do something
             // to it that depends on the view being shown and/or
             // the controller being loaded
+            Controller controller = loader.getController();
             return controller;
 
         } catch (IOException e) {
@@ -86,8 +84,8 @@ public class MainFXApplication extends Application {
         // show the view for the Welcome Screen
         Controller controller = showScreen("src/main/java/view/WelcomeScreen.fxml");
 
-        // initialize the controller
-        controller.initialize();
+        // setup the controller
+        controller.setupController();
 
         // set general title
         mainScreen.setTitle("AdvancedImproved");
@@ -100,8 +98,8 @@ public class MainFXApplication extends Application {
         // show the view for the Map Select Screen
         Controller controller = showScreen("src/main/java/view/MapSelectScreen.fxml");
 
-        // initialize the controller
-        controller.initialize();
+        // setup the controller
+        controller.setupController();
 
         // set the title for the map select screen
         mainScreen.setTitle("Select a Map!");
@@ -118,9 +116,9 @@ public class MainFXApplication extends Application {
         // set the map so we know which map to load onto the screen
         controller.setMap(map);
 
-        // initialize the controller after we have set the map
+        // setup the controller after we have set the map
         // we need to know which map to put on the screen duh
-        controller.initialize();
+        controller.setupController();
 
         // set general title
         mainScreen.setTitle("AdvancedImproved");

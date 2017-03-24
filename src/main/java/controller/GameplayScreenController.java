@@ -20,17 +20,17 @@ public class GameplayScreenController extends Controller {
     private Canvas mapCanvas;
 
     @Override
-    public void initialize() {
+    public void setupController() {
         // make sure that the map has been set
         // basically we need the setMap method to have
         // been called before we can run this method successfully
         if (null == map) {
-            // TODO throw an exception
+            System.out.println("Map cannot be null when GameplayScreenController is being setup");
+            System.exit(0);
         }
 
-        // TODO show the map on the mapCanvas
-        // will probably end up passing the mapCanvas to a method in Map
-        // because it makes sense for the map to know how to draw itself
+        // draw the Map onto the screen
+        this.map.draw(mapCanvas);
     }
 
     /**
@@ -39,9 +39,9 @@ public class GameplayScreenController extends Controller {
      * @return whether the map was successfully set or not
      */
     public boolean setMap(Map map) {
-        // only case where we wouldn't
-        // set the map
         if (null == map) {
+            // this is the only case where we wouldn't
+            // set the map successfully
             return false;
         }
 
