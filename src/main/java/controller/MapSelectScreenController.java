@@ -1,13 +1,15 @@
 package controller;
 
-import model.Map;
-import fxapp.MainFXApplication;
-import exception.MapFileReadException;
-
-import javafx.fxml.FXML;
-
+// java standard library imports
 import java.io.FileNotFoundException;
 
+// javafx imports
+import javafx.fxml.FXML;
+
+// this project imports
+import exception.MapFileReadException;
+import fxapp.MainFXApplication;
+import model.Map;
 
 /**
  * Controller for Map Select Screen

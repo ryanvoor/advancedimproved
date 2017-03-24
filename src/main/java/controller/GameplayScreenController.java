@@ -1,8 +1,10 @@
 package controller;
 
+// javafx imports
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 
+// this project imports
 import fxapp.MainFXApplication;
 import model.Map;
 

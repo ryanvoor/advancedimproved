@@ -1,18 +1,24 @@
 package fxapp;
 
-import model.Map;
-import controller.Controller;
-import controller.GameplayScreenController;
+// java standard library imports
+import java.io.FileInputStream;
+import java.io.IOException;
 
+// javafx imports
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-import java.io.FileInputStream;
-import java.io.IOException;
+// this project imports
+import controller.Controller;
+import controller.GameplayScreenController;
+import model.Map;
 
+/**
+ * TODO
+ */
 public class MainFXApplication extends Application {
 
     /**

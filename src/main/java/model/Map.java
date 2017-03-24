@@ -1,14 +1,14 @@
 package model;
 
 // java standard library imports
-import java.io.FileNotFoundException;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.lang.Iterable;
 import java.lang.UnsupportedOperationException;
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Scanner;
 
 // javafx imports
 import javafx.scene.canvas.Canvas;

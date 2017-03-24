@@ -1,6 +1,9 @@
 package controller;
 
+// javafx imports
 import javafx.fxml.FXML;
+
+// this project imports
 import fxapp.MainFXApplication;
 
 /**
