@@ -12,7 +12,7 @@ public class Mountain extends Terrain {
      * TODO
      */
     public Mountain() {
-        super("file:lib/images/Mountain.png");
+        super("file:lib/images/mountain.jpg");
     }
 
     /**
