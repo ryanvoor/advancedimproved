@@ -112,8 +112,6 @@ public class Tile {
 
 
         Image terrainImage = this.getTerrain().getImage();
-        // TODO testing
-        System.out.println("GOT HERE: in Tile.draw: before drawImage -> terrainImage: " + terrainImage + ", xPosition: " + xPosition + ", yPosition: " + yPosition);
         graphicsContext.drawImage(
             terrainImage,
             xPosition,
