@@ -12,7 +12,7 @@ public class Plains extends Terrain {
      * TODO
      */
     public Plains() {
-        super("file:lib/images/Plains.png");
+        super("file:lib/images/Plains.jpg");
     }
 
     /**
