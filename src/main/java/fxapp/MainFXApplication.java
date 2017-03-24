@@ -88,7 +88,8 @@ public class MainFXApplication extends Application {
      */
     public static void showWelcomeScreen() {
         // show the view for the Welcome Screen
-        Controller controller = showScreen("src/main/java/view/WelcomeScreen.fxml");
+        Controller controller
+            = showScreen("src/main/java/view/WelcomeScreen.fxml");
 
         // setup the controller
         controller.setupController();
@@ -102,7 +103,8 @@ public class MainFXApplication extends Application {
      */
     public static void showMapSelectScreen() {
         // show the view for the Map Select Screen
-        Controller controller = showScreen("src/main/java/view/MapSelectScreen.fxml");
+        Controller controller
+            = showScreen("src/main/java/view/MapSelectScreen.fxml");
 
         // setup the controller
         controller.setupController();
@@ -117,7 +119,9 @@ public class MainFXApplication extends Application {
     public static void showGameplayScreen(Map map) {
         // show the view for the Gameplay Screen
         GameplayScreenController controller
-            = (GameplayScreenController) showScreen("src/main/java/view/GameplayScreen.fxml");
+            = (GameplayScreenController) showScreen(
+                "src/main/java/view/GameplayScreen.fxml"
+            );
 
         // set the map so we know which map to load onto the screen
         controller.setMap(map);

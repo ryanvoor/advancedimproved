@@ -3,8 +3,6 @@ package model;
 // java standard library imports
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.lang.Iterable;
-import java.lang.UnsupportedOperationException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -67,8 +65,10 @@ public class Map implements Iterable<Tile> {
      * @param root the top-left Tile of this map
      */
     public Map(ArrayList<ArrayList<Tile>> tiles) {
-        // TODO should I have something that enforces that the arraylists inside are all the same length?
-        // i should check the factory methods to see if that kind of validation is already handled sort of
+        // TODO should I have something that enforces that the
+        // arraylists inside are all the same length?
+        // i should check the factory methods to see if that kind of
+        // validation is already handled sort of
         // make decision as to whether i should put additional validation here
         this.tiles = tiles;
     }

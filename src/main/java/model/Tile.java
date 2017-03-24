@@ -15,8 +15,8 @@ import javafx.scene.image.Image;
 public class Tile {
 
     // constants
-    private static final int widthOfATileInPixels  = 100;
-    private static final int heightOfATileInPixels = 100;
+    private static final int WIDTH_OF_A_TILE_IN_PIXELS  = 100;
+    private static final int HEIGHT_OF_A_TILE_IN_PIXELS = 100;
 
     // instance variables
     private TileOccupant occupant;
@@ -45,14 +45,14 @@ public class Tile {
      * TODO
      */
     public static int getWidthOfATileInPixels() {
-        return Tile.widthOfATileInPixels;
+        return Tile.WIDTH_OF_A_TILE_IN_PIXELS;
     }
 
     /**
      * TODO
      */
     public static int getHeightOfATileInPixels() {
-        return Tile.heightOfATileInPixels;
+        return Tile.HEIGHT_OF_A_TILE_IN_PIXELS;
     }
 
     /**
@@ -104,7 +104,8 @@ public class Tile {
     public void draw(Canvas canvas, int xPosition, int yPosition) {
         // TODO this needs to be finished
         // TODO this needs to be tested, it might be finished if it works lol
-        // TODO in order to test this I need to implement getImage for the Terrains
+        // TODO in order to test this I need to
+        // implement getImage for the Terrains
 
         // TODO maybe I could draw the terrain image and then the
         // occupant image on top of it, so using 2 separate draw calls

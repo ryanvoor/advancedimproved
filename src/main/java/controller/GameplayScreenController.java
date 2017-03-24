@@ -27,7 +27,10 @@ public class GameplayScreenController extends Controller {
         // basically we need the setMap method to have
         // been called before we can run this method successfully
         if (null == map) {
-            System.out.println("Map cannot be null when GameplayScreenController is being setup");
+            System.out.println(
+                "Map cannot be null when "
+                + "GameplayScreenController is being setup"
+            );
             System.exit(0);
         }
 
@@ -53,7 +56,8 @@ public class GameplayScreenController extends Controller {
         return true;
     }
 
-    // TODO this might not be working since I can't focus the canvas since there's nothing inside it
+    // TODO this might not be working since I can't
+    // focus the canvas since there's nothing inside it
     /**
      * executes when enter key is pressed
      */
