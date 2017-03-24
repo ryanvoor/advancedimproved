@@ -7,13 +7,12 @@ import javafx.scene.image.Image;
  * TODO
  */
 public class Mountain extends Terrain {
-    //private final int ???MovementCost = ???;
 
     /**
      * TODO
      */
     public Mountain() {
-        // TODO anything to do here?
+        super("file:lib/images/Mountain.png");
     }
 
     /**
@@ -25,11 +24,5 @@ public class Mountain extends Terrain {
         //    return ???;
         //}
         return 0;
-    }
-
-    @Override
-    public Image getImage() {
-        // TODO this is temporary for compilation purposes
-        return null;
     }
 }

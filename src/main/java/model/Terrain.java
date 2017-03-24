@@ -8,14 +8,40 @@ import javafx.scene.image.Image;
  */
 public abstract class Terrain {
 
+    // constants
+    private String imageFileUrl;
+
+    /**
+     * TODO
+     */
+    public Terrain(String imageFileUrl) {
+        this.imageFileUrl = imageFileUrl;
+    }
+
+    //////////////////////
+    // Abstract Methods //
+    //////////////////////
+
     /**
      * TODO
      */
     public abstract int getMovementCost(TileOccupant unit);
 
+    /////////////
+    // Getters //
+    /////////////
+
     /**
      * TODO
      */
-    public abstract Image getImage();
+    public String getImageFileUrl() {
+        return this.imageFileUrl;
+    }
 
+	/**
+ 	 * TODO
+	 */
+    public Image getImage() {
+        return new Image(this.getImageFileUrl());
+    }
 }
