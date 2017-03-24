@@ -86,6 +86,19 @@ public class Map implements Iterable<Tile> {
         // going to return a MapIterator
         MapIterator mapIterator = (MapIterator) this.iterator();
 
+        // grab the current X and Y indices before the loop starts
+        // because every time next() gets called they increment and
+        // the Tile should be drawn using the indices from before
+        // the next() call that returned that Tile occurred.
+
+        // get the xPosition for the canvas
+        int currentXIndex = mapIterator.getCurrentXIndex();
+        int xPosition = currentXIndex * Tile.getWidthOfATileInPixels();
+
+        // get the yPosition for the canvas
+        int currentYIndex = mapIterator.getCurrentYIndex();
+        int yPosition = currentYIndex * Tile.getHeightOfATileInPixels();
+
         // iterate through all the tiles
         while (mapIterator.hasNext()) {
             // get the tile I am currently on in the iteration
@@ -98,16 +111,21 @@ public class Map implements Iterable<Tile> {
             // also ignore the size of the window and the size of
             // the canvas that we're drawing on
 
-            // get the xPosition for the canvas
-            int currentXIndex = mapIterator.getCurrentXIndex();
-            int xPosition = currentXIndex * Tile.getWidthOfATileInPixels();
-
-            // get the yPosition for the canvas
-            int currentYIndex = mapIterator.getCurrentYIndex();
-            int yPosition = currentYIndex * Tile.getHeightOfATileInPixels();
-
             // draw the current tile onto the canvas
             currentTile.draw(canvas, xPosition, yPosition);
+
+            // update the X and Y positions after we draw the map because
+            // the indices from before the next() call must be used to
+            // draw the current Tile in order for it to be in the right
+            // place on the canvas
+
+            // get the xPosition for the canvas
+            currentXIndex = mapIterator.getCurrentXIndex();
+            xPosition = currentXIndex * Tile.getWidthOfATileInPixels();
+
+            // get the yPosition for the canvas
+            currentYIndex = mapIterator.getCurrentYIndex();
+            yPosition = currentYIndex * Tile.getHeightOfATileInPixels();
         }
     }
 
