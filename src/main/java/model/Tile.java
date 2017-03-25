@@ -99,39 +99,24 @@ public class Tile {
     //////////////////
 
     /**
-     * TODO
+     * draws the terrain and occupant of this Tile onto the
+     * canvas at the specified positions
+     * @param canvas the canvas upon which this Tile will be drawn
+     * @param xPosition the X position in pixels of the top-left corner
+     * of the Tile where it will be drawn
+     * @param yPosition the Y position in pixels of the top-left corner
+     * of the Tile where it will be drawn
      */
     public void draw(Canvas canvas, int xPosition, int yPosition) {
-        // TODO this needs to be finished. the TileOccupant part hasn't been tested
+        // grab the terrain and draw it on the canvas
+        Terrain terrain = this.getTerrain();
+        terrain.draw(canvas, xPosition, yPosition);
 
-        // TODO maybe I could draw the terrain image and then the
-        // occupant image on top of it, so using 2 separate draw calls
-        // I won't know if this works until I try it however
-        GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
-
-        // TODO I should probably move these drawImage calls to the Terrain
-        // and TileOccupant classes since they hold the Image info
-        Image terrainImage = this.getTerrain().getImage();
-        graphicsContext.drawImage(
-            terrainImage,
-            xPosition,
-            yPosition,
-            Tile.getWidthOfATileInPixels(),
-            Tile.getHeightOfATileInPixels()
-        );
-
-        // TODO NOTE: if I did it this way then this would require all the
-        // occupant images be the same size as the terrainImages except
-        // they would need transparent backgrounds so you can see the terrain
+        // if this Tile has an occupant, then grab
+        // it and draw it on the canvas
         if (this.hasOccupant()) {
-            Image occupantImage = this.getOccupant().getImage();
-            graphicsContext.drawImage(
-                occupantImage,
-                xPosition,
-                yPosition,
-                Tile.getWidthOfATileInPixels(),
-                Tile.getHeightOfATileInPixels()
-            );
+            TileOccupant occupant = this.getOccupant();
+            occupant.draw(canvas, xPosition, yPosition);
         }
     }
 }

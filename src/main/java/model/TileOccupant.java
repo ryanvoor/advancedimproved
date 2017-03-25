@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 /**
  * TODO
  */
-public abstract class TileOccupant {
+public abstract class TileOccupant implements Drawable {
 
     // instance variables
     private String fileImageUrl;

@@ -392,7 +392,9 @@ public class Map implements Iterable<Tile> {
             f => forest,
 
             Occupants:
-            n => no occupant
+            n => no occupant,
+            i => infantry,
+            s => sniper,
 
     */
 
@@ -443,6 +445,12 @@ public class Map implements Iterable<Tile> {
         switch (fileString) {
         case "n":
             toBeReturned = null;
+            break;
+        case "i":
+            toBeReturned = new Infantry();
+            break;
+        case "s":
+            toBeReturned = new Sniper();
             break;
         default:
             throw new MapFileReadException(

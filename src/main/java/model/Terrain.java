@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 /**
  * TODO
  */
-public abstract class Terrain {
+public abstract class Terrain implements Drawable {
 
     // constants
     private String imageFileUrl;
