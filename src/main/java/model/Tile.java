@@ -102,22 +102,22 @@ public class Tile {
      * TODO
      */
     public void draw(Canvas canvas, int xPosition, int yPosition) {
-        // TODO this needs to be finished. it currently isn't working
-        // TODO seems like this method isn't actually drawing anything :|
+        // TODO this needs to be finished. the TileOccupant part hasn't been tested
 
         // TODO maybe I could draw the terrain image and then the
         // occupant image on top of it, so using 2 separate draw calls
         // I won't know if this works until I try it however
         GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
 
-
+        // TODO I should probably move these drawImage calls to the Terrain
+        // and TileOccupant classes since they hold the Image info
         Image terrainImage = this.getTerrain().getImage();
         graphicsContext.drawImage(
             terrainImage,
             xPosition,
             yPosition,
-            xPosition + Tile.getWidthOfATileInPixels(),
-            yPosition + Tile.getHeightOfATileInPixels()
+            Tile.getWidthOfATileInPixels(),
+            Tile.getHeightOfATileInPixels()
         );
 
         // TODO NOTE: if I did it this way then this would require all the
@@ -129,10 +129,9 @@ public class Tile {
                 occupantImage,
                 xPosition,
                 yPosition,
-                xPosition + Tile.getWidthOfATileInPixels(),
-                yPosition + Tile.getHeightOfATileInPixels()
+                Tile.getWidthOfATileInPixels(),
+                Tile.getHeightOfATileInPixels()
             );
         }
     }
-
 }
