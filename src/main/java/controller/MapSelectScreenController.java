@@ -16,6 +16,18 @@ import model.Map;
  */
 public class MapSelectScreenController extends Controller {
 
+    ///////////////////
+    // Event Methods //
+    ///////////////////
+
+    /**
+     * executes when back button is pressed on map select screen
+     */
+    @FXML
+    private void mapSelectBackButtonPressed() {
+        MainFXApplication.showWelcomeScreen();
+    }
+
     /**
      * executes when example map select button is pressed
      */
@@ -23,6 +35,10 @@ public class MapSelectScreenController extends Controller {
     private void exampleMapSelectButtonPressed() {
         mapSelectButtonPressed("lib/maps/example.map");
     }
+
+    ////////////////////
+    // Helper Methods //
+    ////////////////////
 
     /**
      * builds Map with given File and if successful
