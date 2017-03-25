@@ -12,7 +12,7 @@ public class Forest extends Terrain {
      * TODO
      */
     public Forest() {
-        super("File:lib/images/forest.png");
+        super("File:lib/images/resized/forest_resized.png");
     }
 
     @Override
