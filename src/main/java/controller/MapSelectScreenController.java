@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 // this project imports
 import exception.MapFileReadException;
 import fxapp.MainFXApplication;
+import model.Facade;
 import model.map.Map;
 
 /**
@@ -49,7 +50,7 @@ public class MapSelectScreenController extends Controller {
     private void mapSelectButtonPressed(String mapFilePath) {
         Map map = null;
         try {
-            map = Map.buildMap(mapFilePath);
+            map = Facade.buildMap(mapFilePath);
             // TODO there should be different catches for each type of error
         } catch (MapFileReadException e) {
             // TODO make this a user dialogue

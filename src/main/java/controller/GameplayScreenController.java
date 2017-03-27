@@ -6,6 +6,7 @@ import javafx.scene.canvas.Canvas;
 
 // this project imports
 import fxapp.MainFXApplication;
+import model.Facade;
 import model.map.Map;
 
 /**
@@ -35,8 +36,30 @@ public class GameplayScreenController extends Controller {
         }
 
         // draw the Map onto the screen
-        this.map.draw(mapCanvas);
+        Facade.drawMap(this.getMap(), this.getMapCanvas());
     }
+
+    /////////////
+    // Getters //
+    /////////////
+
+    /**
+     * TODO
+     */
+    public Map getMap() {
+        return this.map;
+    }
+
+    /**
+     * TODO
+     */
+    public Canvas getMapCanvas() {
+        return this.mapCanvas;
+    }
+
+    /////////////
+    // Setters //
+    /////////////
 
     /**
      * setter for the map instance variable
