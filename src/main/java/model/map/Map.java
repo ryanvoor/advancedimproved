@@ -1,4 +1,4 @@
-package model;
+package model.map;
 
 // java standard library imports
 import java.io.File;
@@ -13,6 +13,14 @@ import javafx.scene.canvas.Canvas;
 
 // this project imports
 import exception.MapFileReadException;
+import model.drawable.terrain.Terrain;
+import model.drawable.terrain.Forest;
+import model.drawable.terrain.Mountain;
+import model.drawable.terrain.Plains;
+import model.drawable.tileOccupant.TileOccupant;
+import model.drawable.tileOccupant.Infantry;
+import model.drawable.tileOccupant.Sniper;
+import model.map.Tile;
 
 /**
  * Represents an individual Map

@@ -6,7 +6,7 @@ import javafx.scene.canvas.Canvas;
 
 // this project imports
 import fxapp.MainFXApplication;
-import model.Map;
+import model.map.Map;
 
 /**
  * Controller for Gameplay Screen

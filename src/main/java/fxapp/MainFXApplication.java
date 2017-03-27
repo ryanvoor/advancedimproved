@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 // this project imports
 import controller.Controller;
 import controller.GameplayScreenController;
-import model.Map;
+import model.map.Map;
 
 /**
  * TODO

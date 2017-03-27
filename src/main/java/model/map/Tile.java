@@ -1,9 +1,13 @@
-package model;
+package model.map;
 
 // javafx imports
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+
+// this project imports
+import model.drawable.terrain.Terrain;
+import model.drawable.tileOccupant.TileOccupant;
 
 /**
  * Class that represents a Tile on a Map

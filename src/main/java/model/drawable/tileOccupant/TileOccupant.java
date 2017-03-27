@@ -1,7 +1,10 @@
-package model;
+package model.drawable.tileOccupant;
 
 // javafx imports
 import javafx.scene.image.Image;
+
+// this project imports
+import model.drawable.Drawable;
 
 /**
  * TODO

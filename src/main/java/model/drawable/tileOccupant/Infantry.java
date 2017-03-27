@@ -1,4 +1,4 @@
-package model;
+package model.drawable.tileOccupant;
 
 // javafx imports
 import javafx.scene.image.Image;

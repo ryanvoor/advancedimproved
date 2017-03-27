@@ -1,18 +1,21 @@
-package model;
+package model.drawable.terrain;
 
 // javafx imports
 import javafx.scene.image.Image;
 
+// this project imports
+import model.drawable.tileOccupant.TileOccupant;
+
 /**
  * TODO
  */
-public class Plains extends Terrain {
+public class Mountain extends Terrain {
 
     /**
      * TODO
      */
-    public Plains() {
-        super("file:lib/images/resized/plains_resized.jpg");
+    public Mountain() {
+        super("file:lib/images/resized/mountain_resized.jpg");
     }
 
     /**

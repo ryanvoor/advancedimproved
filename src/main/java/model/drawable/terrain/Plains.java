@@ -1,21 +1,26 @@
-package model;
+package model.drawable.terrain;
 
 // javafx imports
 import javafx.scene.image.Image;
 
+// this project imports
+import model.drawable.tileOccupant.TileOccupant;
+
 /**
  * TODO
  */
-public class Forest extends Terrain {
+public class Plains extends Terrain {
 
     /**
      * TODO
      */
-    public Forest() {
-        super("File:lib/images/resized/forest_resized.png");
+    public Plains() {
+        super("file:lib/images/resized/plains_resized.jpg");
     }
 
-    @Override
+    /**
+     * TODO
+     */
     public int getMovementCost(TileOccupant unit) {
         // TODO
         //if (unit instanceof ???) {

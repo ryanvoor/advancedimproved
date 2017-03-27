@@ -1,4 +1,4 @@
-package model;
+package model.drawable;
 
 // javafx imports
 import javafx.scene.image.Image;
@@ -6,7 +6,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
 // this project imports
-import model.Tile;
+import model.map.Tile;
 
 /**
  * TODO

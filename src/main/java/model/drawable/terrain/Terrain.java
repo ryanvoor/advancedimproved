@@ -1,7 +1,11 @@
-package model;
+package model.drawable.terrain;
 
 // javafx imports
 import javafx.scene.image.Image;
+
+// this project imports
+import model.drawable.Drawable;
+import model.drawable.tileOccupant.TileOccupant;
 
 /**
  * TODO

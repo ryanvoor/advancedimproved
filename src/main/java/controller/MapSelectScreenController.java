@@ -9,7 +9,7 @@ import javafx.fxml.FXML;
 // this project imports
 import exception.MapFileReadException;
 import fxapp.MainFXApplication;
-import model.Map;
+import model.map.Map;
 
 /**
  * Controller for Map Select Screen
