@@ -42,9 +42,9 @@ public abstract class Terrain implements Drawable {
         return this.imageFileUrl;
     }
 
-	/**
- 	 * TODO
-	 */
+    /**
+     * TODO
+     */
     public Image getImage() {
         return new Image(this.getImageFileUrl());
     }

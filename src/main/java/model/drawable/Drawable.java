@@ -20,7 +20,7 @@ public interface Drawable {
     /**
      * TODO
      */
-    public Image getImage();
+    Image getImage();
 
     //////////////////////////////////////////
     // Methods with Default Implementations //
@@ -29,7 +29,7 @@ public interface Drawable {
     /**
      * TODO
      */
-    public default void draw(Canvas canvas, int xPosition, int yPosition) {
+    default void draw(Canvas canvas, int xPosition, int yPosition) {
         // grab graphics context object and image
         GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
         Image image = this.getImage();

@@ -25,7 +25,8 @@ public class Facade {
     /**
      * TODO
      */
-    public static Map buildMap(String mapFilePath) throws FileNotFoundException, MapFileReadException {
+    public static Map buildMap(String mapFilePath)
+        throws FileNotFoundException, MapFileReadException {
         return Map.buildMap(mapFilePath);
     }
 

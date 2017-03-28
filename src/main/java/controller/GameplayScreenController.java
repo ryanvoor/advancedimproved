@@ -39,7 +39,10 @@ public class GameplayScreenController extends Controller {
         Facade.drawMap(this.getMap(), this.getMapCanvas());
 
         // TODO for these three related tasks see this link for help:
-//http://stackoverflow.com/questions/29962395/how-to-write-a-keylistener-for-javafx
+/*
+http://stackoverflow.com/ (cont on next line for checkstyle purposes)
+questions/29962395/how-to-write-a-keylistener-for-javafx
+*/
 
         // set up key event handler
         // TODO

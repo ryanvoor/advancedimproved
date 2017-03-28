@@ -1,8 +1,5 @@
 package model.drawable.terrain;
 
-// javafx imports
-import javafx.scene.image.Image;
-
 // this project imports
 import model.drawable.tileOccupant.TileOccupant;
 

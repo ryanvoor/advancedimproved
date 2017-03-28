@@ -20,7 +20,6 @@ import model.drawable.terrain.Plains;
 import model.drawable.tileOccupant.TileOccupant;
 import model.drawable.tileOccupant.Infantry;
 import model.drawable.tileOccupant.Sniper;
-import model.map.Tile;
 
 /**
  * Represents an individual Map

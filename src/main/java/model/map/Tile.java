@@ -2,8 +2,6 @@ package model.map;
 
 // javafx imports
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 
 // this project imports
 import model.drawable.terrain.Terrain;
