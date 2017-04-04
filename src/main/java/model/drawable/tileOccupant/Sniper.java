@@ -4,12 +4,15 @@ package model.drawable.tileOccupant;
 import javafx.scene.image.Image;
 
 /**
- * TODO
+ * represents a Sniper TileOccupant
+ * for more information about TileOccupants
+ * see the TileOccupant class
+ * @author Ryan Voor
  */
 public class Sniper extends TileOccupant {
 
     /**
-     * TODO
+     * constructor for the Sniper class
      */
     public Sniper() {
         super("file:lib/images/resized/megaman_pointing_transparent_resized.gif");

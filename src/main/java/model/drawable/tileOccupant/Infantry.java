@@ -4,12 +4,15 @@ package model.drawable.tileOccupant;
 import javafx.scene.image.Image;
 
 /**
- * TODO
+ * represents an Infantry TileOccupant
+ * for more information about TileOccupants
+ * see the TileOccupant class
+ * @author Ryan Voor
  */
 public class Infantry extends TileOccupant {
 
     /**
-     * TODO
+     * constructor for the Infantry class
      */
     public Infantry() {
         super("file:lib/images/resized/megaman_running_transparent_resized.gif");

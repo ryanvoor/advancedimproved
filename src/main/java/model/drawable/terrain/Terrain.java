@@ -8,7 +8,9 @@ import model.drawable.Drawable;
 import model.drawable.tileOccupant.TileOccupant;
 
 /**
- * TODO
+ * represents the Terrain that units stand upon and move across
+ * on a particular Tile on the Map
+ * @author Ryan Voor
  */
 public abstract class Terrain implements Drawable {
 
@@ -16,7 +18,9 @@ public abstract class Terrain implements Drawable {
     private String imageFileUrl;
 
     /**
-     * TODO
+     * constructor for the Terrain class
+     * @param imageFileUrl the url of the file
+     * that will be displayed for this Terrain
      */
     public Terrain(String imageFileUrl) {
         this.imageFileUrl = imageFileUrl;
@@ -27,7 +31,13 @@ public abstract class Terrain implements Drawable {
     //////////////////////
 
     /**
-     * TODO
+     * returns the movement cost that a unit needs to pay
+     * to move onto a Tile that has this Terrain
+     * @param unit the TileOccupant that is attempting
+     * to move onto the Tile that has this Terrain
+     * @return int the movement cost that the parameter
+     * unit must pay in order to move onto a Tile that
+     * has this Terrain
      */
     public abstract int getMovementCost(TileOccupant unit);
 
@@ -36,14 +46,20 @@ public abstract class Terrain implements Drawable {
     /////////////
 
     /**
-     * TODO
+     * getter for the url of the image that
+     * should be displayed for this Terrain
+     * @return String the url of the image that
+     * should be displayed for this Terrain
      */
     public String getImageFileUrl() {
         return this.imageFileUrl;
     }
 
 	/**
- 	 * TODO
+ 	 * getter for the Image that should be displayed
+     * for this Terrain
+     * @return Image the image that should be displayed
+     * for this Terrain
 	 */
     public Image getImage() {
         return new Image(this.getImageFileUrl());

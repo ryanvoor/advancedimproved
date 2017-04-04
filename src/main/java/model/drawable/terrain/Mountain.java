@@ -7,20 +7,21 @@ import javafx.scene.image.Image;
 import model.drawable.tileOccupant.TileOccupant;
 
 /**
- * TODO
+ * represents a Mountain Terrain
+ * for more information about Terrain objects,
+ * check the Terrain class
+ * @author Ryan Voor
  */
 public class Mountain extends Terrain {
 
     /**
-     * TODO
+     * constructor for the Mountain class
      */
     public Mountain() {
         super("file:lib/images/resized/mountain_resized.jpg");
     }
 
-    /**
-     * TODO
-     */
+    @Override
     public int getMovementCost(TileOccupant unit) {
         // TODO
         //if (unit instanceof ???) {

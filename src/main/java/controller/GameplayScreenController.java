@@ -44,14 +44,20 @@ public class GameplayScreenController extends Controller {
     /////////////
 
     /**
-     * TODO
+     * getter for the Map object that gets drawn on
+     * the screen that this Controller controls
+     * @return Map the map that is being displayed
+     * on the screen that this Controller controls
      */
     public Map getMap() {
         return this.map;
     }
 
     /**
-     * TODO
+     * getter for the Canvas object upon
+     * which the Map is drawn
+     * @return Canvas the canvas upon which
+     * the map is drawn
      */
     public Canvas getMapCanvas() {
         return this.mapCanvas;

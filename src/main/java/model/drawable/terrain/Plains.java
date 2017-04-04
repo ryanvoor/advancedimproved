@@ -7,20 +7,21 @@ import javafx.scene.image.Image;
 import model.drawable.tileOccupant.TileOccupant;
 
 /**
- * TODO
+ * represents a Plains Terrain
+ * for more information about Terrain objects,
+ * check the Terrain class
+ * @author Ryan Voor
  */
 public class Plains extends Terrain {
 
     /**
-     * TODO
+     * constructor for the Plains class
      */
     public Plains() {
         super("file:lib/images/resized/plains_resized.jpg");
     }
 
-    /**
-     * TODO
-     */
+    @Override
     public int getMovementCost(TileOccupant unit) {
         // TODO
         //if (unit instanceof ???) {

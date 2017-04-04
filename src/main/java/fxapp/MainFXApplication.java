@@ -17,7 +17,9 @@ import controller.GameplayScreenController;
 import model.map.Map;
 
 /**
- * TODO
+ * Main class for the application,
+ * controls the main execution flow
+ * @author Ryan Voor
  */
 public class MainFXApplication extends Application {
 
