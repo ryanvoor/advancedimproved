@@ -39,7 +39,8 @@ public class Facade {
      * @param mapFilePath the file path to the file that represents
      * the map that should be built
      */
-    public static Map buildMap(String mapFilePath) throws FileNotFoundException, MapFileReadException {
+    public static Map buildMap(String mapFilePath)
+        throws FileNotFoundException, MapFileReadException {
         return Map.buildMap(mapFilePath);
     }
 

@@ -37,6 +37,21 @@ public class GameplayScreenController extends Controller {
 
         // draw the Map onto the screen
         Facade.drawMap(this.getMap(), this.getMapCanvas());
+
+        // TODO for these three related tasks see this link for help:
+/*
+http://stackoverflow.com/ (cont on next line for checkstyle purposes)
+questions/29962395/how-to-write-a-keylistener-for-javafx
+*/
+
+        // set up key event handler
+        // TODO
+
+        // set up mouse event handler
+        // TODO
+
+        // set up animation timer (redraws canvas every frame)
+        // TODO
     }
 
     /////////////
