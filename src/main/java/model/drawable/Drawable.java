@@ -9,7 +9,9 @@ import javafx.scene.canvas.GraphicsContext;
 import model.map.Tile;
 
 /**
- * TODO
+ * Any class that implements this Interface can
+ * be drawn onto a Canvas
+ * @author Ryan Voor
  */
 public interface Drawable {
 
@@ -18,7 +20,9 @@ public interface Drawable {
     /////////////////////////////
 
     /**
-     * TODO
+     * getter for the Image that should be drawn to
+     * represent this class
+     * @return Image the image to be returned
      */
     Image getImage();
 
@@ -27,7 +31,13 @@ public interface Drawable {
     //////////////////////////////////////////
 
     /**
-     * TODO
+     * draws the Image that should be drawn to represent this class
+     * onto the parameter canvas at the paremeter x and y coordinates
+     * @param canvas the canvas upon which to drawn the image
+     * @param xPosition the X-coordinate of the location on
+     * the canvas where the top left corner of the image should be
+     * @param yPosition the Y-coordinate of the location on
+     * the canvas where the top left corner of the image should be
      */
     default void draw(Canvas canvas, int xPosition, int yPosition) {
         // grab graphics context object and image

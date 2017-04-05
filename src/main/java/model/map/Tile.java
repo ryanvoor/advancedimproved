@@ -7,12 +7,14 @@ import javafx.scene.canvas.Canvas;
 import model.drawable.terrain.Terrain;
 import model.drawable.tileOccupant.TileOccupant;
 
+// TODO at some point this class will need to be modified to hold
+// multiple occupants so the gameplay dream can be implemented
+
 /**
  * Class that represents a Tile on a Map
  * this class holds the occupant unit(s) and knows the
  * Terrain of this Tile on the Map
  * @author Ryan Voor
- * @version 1.0
  */
 public class Tile {
 
@@ -25,7 +27,10 @@ public class Tile {
     private Terrain terrain;
 
     /**
-     * TODO
+     * constructor for the Tile class, takes in
+     * both a Terrain and a TileOccupant
+     * @param terrain the terrain of this Tile
+     * @param occupant the occupant of this Tile
      */
     public Tile(Terrain terrain, TileOccupant occupant) {
         this.terrain  = terrain;
@@ -33,7 +38,9 @@ public class Tile {
     }
 
     /**
-     * TODO
+     * constructor for the Tile class, just takes in
+     * a Terrain, this Tile will have no occupant
+     * @param terrain the terrain of this Tile
      */
     public Tile(Terrain terrain) {
         this(terrain, null);
@@ -44,35 +51,42 @@ public class Tile {
     /////////////
 
     /**
-     * TODO
+     * returns the number of pixels wide that
+     * a Tile is on the Map
+     * @return int the pixel width of a Tile
      */
     public static int getWidthOfATileInPixels() {
         return Tile.WIDTH_OF_A_TILE_IN_PIXELS;
     }
 
     /**
-     * TODO
+     * returns the number of pixels high that
+     * a Tile is on the Map
+     * @return int the pixel height of a Tile
      */
     public static int getHeightOfATileInPixels() {
         return Tile.HEIGHT_OF_A_TILE_IN_PIXELS;
     }
 
     /**
-     * TODO
+     * the getter for the occupant of this Tile
+     * @return TileOccupant the occupant of this Tile
      */
     public TileOccupant getOccupant() {
         return this.occupant;
     }
 
     /**
-     * TODO
+     * the getter for the Terrain of this Tile
+     * @return Terrain the Terrain of this Tile
      */
     public Terrain getTerrain() {
         return this.terrain;
     }
 
     /**
-     * TODO
+     * returns whether this Tile has an occupant
+     * @return boolean whether this Tile has an occupant
      */
     public boolean hasOccupant() {
         return null != this.getOccupant();
@@ -83,14 +97,16 @@ public class Tile {
     /////////////
 
     /**
-     * TODO
+     * setter for the occupant of this Tile
+     * @param occupant the occupant to be placed on this Tile
      */
     public void setOccupant(TileOccupant occupant) {
         this.occupant = occupant;
     }
 
     /**
-     * TODO
+     * setter for the Terrain of this Tile
+     * @param terrain the Terrain to be placed on this Tile
      */
     public void setTerrain(Terrain terrain) {
         this.terrain = terrain;
