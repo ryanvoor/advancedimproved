@@ -1,8 +1,11 @@
 package controller;
 
 // javafx imports
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 
 // this project imports
 import fxapp.MainFXApplication;
@@ -16,6 +19,8 @@ public class GameplayScreenController extends Controller {
 
     // regular instance variables
     private Map map;
+    private int selectedColumn;
+    private int selectedRow;
 
     // FXML instance variables
     // these get set automatically by javafx and the fxml
@@ -35,8 +40,12 @@ public class GameplayScreenController extends Controller {
             System.exit(0);
         }
 
+        // grab the relevant instance variables
+        Canvas mapCanvas = this.getMapCanvas();
+        Map map = this.getMap();
+
         // draw the Map onto the screen
-        Facade.drawMap(this.getMap(), this.getMapCanvas());
+        Facade.drawMap(map, mapCanvas);
 
         // TODO for these three related tasks see this link for help:
 /*
@@ -44,14 +53,40 @@ http://stackoverflow.com/ (cont on next line for checkstyle purposes)
 questions/29962395/how-to-write-a-keylistener-for-javafx
 */
 
-        // set up key event handler
-        // TODO
-
         // set up mouse event handler
+        mapCanvas.addEventHandler(MouseEvent.MOUSE_CLICKED,
+        new EventHandler<MouseEvent>() {
+            // execute this method when user clicks on the canvas
+            @Override
+            public void handle(MouseEvent e) {
+                // select the tile that gets clicked on
+                GameplayScreenController.this.setSelectedColumn(
+                    // cast this because I don't care about partial pixel values
+                    map.getColumnFromCoordinate((int) e.getX())
+                );
+                GameplayScreenController.this.setSelectedRow(
+                    // cast this because I don't care about partial pixel values
+                    map.getRowFromCoordinate((int) e.getY())
+                );
+
+                // TODO this is just so I can get testing feedback
+                // eventually this logic should be in the animation timer
+                map.tintTile(
+                    mapCanvas,
+                    GameplayScreenController.this.getSelectedColumn(),
+                    GameplayScreenController.this.getSelectedRow(),
+                    Color.BLUE,
+                    0.3
+                );
+            }
+        });
+
+        // set up key event handler
         // TODO
 
         // set up animation timer (redraws canvas every frame)
         // TODO
+        // highlight the selected tile
     }
 
     /////////////
@@ -78,6 +113,26 @@ questions/29962395/how-to-write-a-keylistener-for-javafx
         return this.mapCanvas;
     }
 
+    /**
+     * getter for the column on the map that the
+     * user currently has selected
+     * @return int the column on the map that the
+     * user currently has selected
+     */
+    public int getSelectedColumn() {
+        return this.selectedColumn;
+    }
+
+    /**
+     * getter for the row on the map that the
+     * user currently has selected
+     * @return int the row on the map that the
+     * user currently has selected
+     */
+    public int getSelectedRow() {
+        return this.selectedRow;
+    }
+
     /////////////
     // Setters //
     /////////////
@@ -99,6 +154,30 @@ questions/29962395/how-to-write-a-keylistener-for-javafx
         this.map = map;
         return true;
     }
+
+    /**
+     * setter for the column that is currently selected
+     * by the user
+     * @param int the column that the is to become
+     * selected
+     */
+    public void setSelectedColumn(int selectedColumn) {
+        this.selectedColumn = selectedColumn;
+    }
+
+    /**
+     * setter for the row that is currently selected
+     * by the user
+     * @param int the row that the is to become
+     * selected
+     */
+    public void setSelectedRow(int selectedRow) {
+        this.selectedRow = selectedRow;
+    }
+
+    //////////////////
+    // Real Methods //
+    //////////////////
 
     // TODO this might not be working since I can't
     // focus the canvas since there's nothing inside it

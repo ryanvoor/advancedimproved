@@ -10,6 +10,9 @@ import java.util.Scanner;
 
 // javafx imports
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 // this project imports
 import exception.MapFileReadException;
@@ -79,6 +82,75 @@ public class Map implements Iterable<Tile> {
         // make decision as to whether i should put additional validation here
         this.tiles = tiles;
     }
+
+    /////////////
+    // Getters //
+    /////////////
+
+    /**
+     * getter for the number of columns in this map
+     * so this gets the number of distinct X indexes
+     * that can be accessed
+     */
+    public int getNumberOfColumns() {
+        return tiles.get(0).size();
+    }
+
+    /**
+     * getter for the number of rows in this map
+     * so this gets the number of distinct Y indexes
+     * that can be accessed
+     */
+    public int getNumberOfRows() {
+        return tiles.size();
+    }
+
+    /**
+     * getter for the maximum X index in this map
+     * so this returns the number of columns minus 1
+     * because we index at zero
+     */
+    public int getMaxXIndex() {
+        return this.getNumberOfColumns() - 1;
+    }
+
+    /**
+     * getter for the maximum Y index in this map
+     * so this returns the number of rows minus 1
+     * because we index at zero
+     */
+    public int getMaxYIndex() {
+        return this.getNumberOfRows() - 1;
+    }
+
+    /**
+     * Getter for the tiles variables
+     * this method is private because it should
+     * only ever be used in this class
+     */
+    private ArrayList<ArrayList<Tile>> getTiles() {
+        return this.tiles;
+    }
+
+    /**
+     * returns the Tile in this Map that resides at the parameter
+     * X and Y indexes
+     * @param xIndex the column upon which the return Tile resides
+     * @param yIndex the row upon which the return Tile resides
+     * @return Tile the Tile that is located at those indexes
+     */
+    public Tile getTileFromIndices(int xIndex, int yIndex) {
+        // grab all the tiles so we can index in
+        ArrayList<ArrayList<Tile>> tiles = this.getTiles();
+
+        // see giant indexing comment at top of this class
+        return tiles.get(yIndex).get(xIndex);
+    }
+
+
+    //////////////////
+    // Real Methods //
+    //////////////////
 
     /**
      * draws this Map on the passed in Canvas object
@@ -251,55 +323,82 @@ public class Map implements Iterable<Tile> {
         }
     }
 
-    /////////////
-    // Getters //
-    /////////////
-
     /**
-     * getter for the number of columns in this map
-     * so this gets the number of distinct X indexes
-     * that can be accessed
+     * given an X-coordinate in pixels returns
+     * the tile column on this Map that contains those coordinates
+     * @param xPos the X coordinate that is contained by the
+     * Tile that will be returned
+     * @return int the column that contains the parameter coordinate
      */
-    public int getNumberOfColumns() {
-        return tiles.get(0).size();
+    public int getColumnFromCoordinate(int xCoordinate) {
+        // grab the pixel width of a single Tile
+        int widthOfATile = Tile.getWidthOfATileInPixels();
+
+        // calculate how many Tiles over the xPos is
+        // (uses integer division)
+        return xCoordinate / widthOfATile;
     }
 
     /**
-     * getter for the number of rows in this map
-     * so this gets the number of distinct Y indexes
-     * that can be accessed
+     * given a Y-coordinate in pixels returns
+     * the tile row on this Map that contains those coordinates
+     * @param yPos the Y coordinate that is contained by the
+     * Tile that will be returned
+     * @return int the row that contains the parameter coordinate
      */
-    public int getNumberOfRows() {
-        return tiles.size();
+    public int getRowFromCoordinate(int yCoordinate) {
+        // grab the pixel height of a single Tile
+        int heightOfATile = Tile.getHeightOfATileInPixels();
+
+        // calculate how many Tiles down the yPos is
+        // (uses integer division)
+        return yCoordinate / heightOfATile;
     }
 
     /**
-     * getter for the maximum X index in this map
-     * so this returns the number of columns minus 1
-     * because we index at zero
+     * tint the tile at the parameter indices to the parameter
+     * color and alpha
+     * @param mapCanvas the canvas upon which this Map is drawn
+     * @param columnIndex the X-Index of the Tile that we are tinting
+     * @param rowIndex the Y-Index of the Tile that we are tinting
+     * @param color the Color to tint the Tile
+     * @param alpha the Alpha value used to determine transparency,
+     * between 0.0 and 1.0 and lower is more transparent
      */
-    public int getMaxXIndex() {
-        return this.getNumberOfColumns() - 1;
-    }
+    public void tintTile(Canvas mapCanvas,
+        int columnIndex, int rowIndex, Color color, double alpha) {
+        // grab the tile width and height
+        int widthOfATile  = Tile.getWidthOfATileInPixels();
+        int heightOfATile = Tile.getHeightOfATileInPixels();
 
-    /**
-     * getter for the maximum Y index in this map
-     * so this returns the number of rows minus 1
-     * because we index at zero
-     */
-    public int getMaxYIndex() {
-        return this.getNumberOfRows() - 1;
-    }
+        // calculate the top-left corner of the Tile that we're tinting
+        int topLeftCornerOfTileXCoordinate = widthOfATile  * columnIndex;
+        int topLeftCornerOfTileYCoordinate = heightOfATile * rowIndex;
 
-    /**
-     * Getter for the tiles variables
-     * this method is private because it should
-     * only ever be used in this class
-     */
-    private ArrayList<ArrayList<Tile>> getTiles() {
-        return this.tiles;
-    }
+        // grab the graphics context
+        GraphicsContext graphicsContext = mapCanvas.getGraphicsContext2D();
 
+        // grab previous alpha and paint values so they can be reset later
+        double previousGlobalAlpha = graphicsContext.getGlobalAlpha();
+        Paint previousFillPaint    = graphicsContext.getFill();
+
+        // set alpha value and paint so the rectangle we draw will be
+        // transparent and the parameter color
+        graphicsContext.setGlobalAlpha(alpha);
+        graphicsContext.setFill(color);
+
+        // draw a transparent box over the Tile
+        graphicsContext.fillRect(
+            topLeftCornerOfTileXCoordinate,
+            topLeftCornerOfTileYCoordinate,
+            widthOfATile,
+            heightOfATile
+        );
+
+        // reset the alpha value to whatever it was before
+        graphicsContext.setGlobalAlpha(previousGlobalAlpha);
+        graphicsContext.setFill(previousFillPaint);
+    }
 
 
     /////////////////////////////////////
