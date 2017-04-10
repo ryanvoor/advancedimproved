@@ -1,9 +1,11 @@
 package controller;
 
 // javafx imports
+import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
@@ -47,12 +49,8 @@ public class GameplayScreenController extends Controller {
         // draw the Map onto the screen
         Facade.drawMap(map, mapCanvas);
 
-        // TODO for these three related tasks see this link for help:
-/*
-http://stackoverflow.com/ (cont on next line for checkstyle purposes)
-questions/29962395/how-to-write-a-keylistener-for-javafx
-*/
-
+        // TODO all the times the map class is accessed directly below
+        // this comment need to be moved to Facade methods
         // set up mouse event handler
         mapCanvas.addEventHandler(MouseEvent.MOUSE_CLICKED,
         new EventHandler<MouseEvent>() {
@@ -69,8 +67,38 @@ questions/29962395/how-to-write-a-keylistener-for-javafx
                     map.getRowFromCoordinate((int) e.getY())
                 );
 
-                // TODO this is just so I can get testing feedback
-                // eventually this logic should be in the animation timer
+            }
+        });
+
+        // set up key event handler
+        // TODO
+
+        // set up animation timer (redraws canvas every frame)
+        AnimationTimer timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                // grab variables that we'll need
+                Map map          = GameplayScreenController.this.getMap();
+                Canvas mapCanvas = GameplayScreenController.this.getMapCanvas();
+                GraphicsContext graphicsContext
+                    = mapCanvas.getGraphicsContext2D();
+
+                // clear the map
+                graphicsContext.clearRect(
+                    0,
+                    0,
+                    mapCanvas.getHeight(),
+                    mapCanvas.getWidth()
+                );
+
+                // TODO pass 'now' to this drawMap call and add logic/capacity
+                // to the Terrain and TileOccupant classes to use 'now'
+                // to draw the different images for animation to happen
+
+                // redraw the map
+                Facade.drawMap(map, mapCanvas);
+
+                // highlight the selected Tile
                 map.tintTile(
                     mapCanvas,
                     GameplayScreenController.this.getSelectedColumn(),
@@ -79,14 +107,10 @@ questions/29962395/how-to-write-a-keylistener-for-javafx
                     0.3
                 );
             }
-        });
+        };
 
-        // set up key event handler
-        // TODO
-
-        // set up animation timer (redraws canvas every frame)
-        // TODO
-        // highlight the selected tile
+        // begin animation/redrawing
+        timer.start();
     }
 
     /////////////
