@@ -71,6 +71,12 @@ public class MainFXApplication extends Application {
             // to it that depends on the view being shown and/or
             // the controller being loaded
             Controller controller = loader.getController();
+
+            // give the scene to the controller before we return it
+            // because we don't have visibility of the Scene outside
+            // this method
+            controller.setScene(scene);
+
             return controller;
 
         } catch (IOException e) {

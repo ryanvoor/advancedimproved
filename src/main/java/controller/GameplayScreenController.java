@@ -6,8 +6,10 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.Scene;
 
 // this project imports
 import fxapp.MainFXApplication;
@@ -31,6 +33,13 @@ public class GameplayScreenController extends Controller {
 
     @Override
     public void setupController() {
+        super.setupController();
+
+        // TODO restructure this so MainFXApplication can just pass
+        // the Map to this method? then I could just have a nice
+        // call to the actually overriden version of setupController once
+        // I've set the Map myself
+
         // make sure that the map has been set
         // basically we need the setMap method to have
         // been called before we can run this method successfully
@@ -44,7 +53,8 @@ public class GameplayScreenController extends Controller {
 
         // grab the relevant instance variables
         Canvas mapCanvas = this.getMapCanvas();
-        Map map = this.getMap();
+        Map map          = this.getMap();
+        Scene scene      = this.getScene();
 
         // draw the Map onto the screen
         Facade.drawMap(map, mapCanvas);
@@ -68,8 +78,34 @@ public class GameplayScreenController extends Controller {
             }
         });
 
-        // set up key event handler
-        // TODO
+
+        // set up key event handlers
+		// key pressed handler
+		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+				// check all the keys that could get pressed that I care about
+                switch (event.getCode()) {
+                    case ENTER:
+						GameplayScreenController.this.enterKeyPressed();
+						break;
+                }
+            }
+        });
+
+		// key released handler
+		scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+				// check all the keys that could get pressed that I care about
+                switch (event.getCode()) {
+                    case ENTER:
+						GameplayScreenController.this.enterKeyReleased();
+						break;
+                }
+            }
+        });
+
 
         // set up animation timer (redraws canvas every frame)
         AnimationTimer timer = new AnimationTimer() {
@@ -110,6 +146,7 @@ public class GameplayScreenController extends Controller {
         // begin animation/redrawing
         timer.start();
     }
+
 
     /////////////
     // Getters //
@@ -155,6 +192,7 @@ public class GameplayScreenController extends Controller {
         return this.selectedRow;
     }
 
+
     /////////////
     // Setters //
     /////////////
@@ -197,19 +235,28 @@ public class GameplayScreenController extends Controller {
         this.selectedRow = selectedRow;
     }
 
+
     //////////////////
     // Real Methods //
     //////////////////
 
-    // TODO this might not be working since I can't
-    // focus the canvas since there's nothing inside it
+	//// key handler methods ////
+
     /**
      * executes when enter key is pressed
      */
-    @FXML
     private void enterKeyPressed() {
-        System.out.println("ENTER BUTTON TESTING WORKED");
+        System.out.println("Enter key pressed");
     }
+
+    /**
+     * executes when enter key is released
+     */
+    private void enterKeyReleased() {
+        System.out.println("Enter key released");
+    }
+
+	//// button handler methods ////
 
     /**
      * executes when the back button on the Gameplay Screen
