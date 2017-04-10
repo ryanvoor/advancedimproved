@@ -59,6 +59,11 @@ public class GameplayScreenController extends Controller {
         // draw the Map onto the screen
         Facade.drawMap(map, mapCanvas);
 
+        // TODO move these event handlers and the animation timer into
+        // their own files (make them subclasses (since that's what they
+        // are already implicitly)) to help keep this controller from
+        // becoming gigantic
+
         // set up mouse event handler
         mapCanvas.addEventHandler(MouseEvent.MOUSE_CLICKED,
             new EventHandler<MouseEvent>() {
