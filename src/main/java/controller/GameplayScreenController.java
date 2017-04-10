@@ -61,47 +61,55 @@ public class GameplayScreenController extends Controller {
 
         // set up mouse event handler
         mapCanvas.addEventHandler(MouseEvent.MOUSE_CLICKED,
-        new EventHandler<MouseEvent>() {
-            // execute this method when user clicks on the canvas
-            @Override
-            public void handle(MouseEvent e) {
-                // select the tile that gets clicked on
-                GameplayScreenController.this.setSelectedColumn(
-                    // cast this because I don't care about partial pixel values
-                    Facade.getColumnFromCoordinate((int) e.getX())
-                );
-                GameplayScreenController.this.setSelectedRow(
-                    // cast this because I don't care about partial pixel values
-                    Facade.getRowFromCoordinate((int) e.getY())
-                );
+            new EventHandler<MouseEvent>() {
+                // execute this method when user clicks on the canvas
+                @Override
+                public void handle(MouseEvent e) {
+                    // select the tile that gets clicked on
+                    GameplayScreenController.this.setSelectedColumn(
+                        // cast this because I don't care about
+                        // partial pixel values
+                        Facade.getColumnFromCoordinate((int) e.getX())
+                    );
+                    GameplayScreenController.this.setSelectedRow(
+                        // cast this because I don't care about
+                        // partial pixel values
+                        Facade.getRowFromCoordinate((int) e.getY())
+                    );
 
-            }
-        });
+                }
+            });
 
 
         // set up key event handlers
-		// key pressed handler
-		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        // key pressed handler
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-				// check all the keys that could get pressed that I care about
+                // check all the keys that could get pressed that I care about
                 switch (event.getCode()) {
                     case ENTER:
-						GameplayScreenController.this.enterKeyPressed();
-						break;
+                        GameplayScreenController.this.enterKeyPressed();
+                        break;
+                    default:
+                        // ignore other button presses
+                    break;
                 }
             }
         });
 
-		// key released handler
-		scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+        // key released handler
+        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-				// check all the keys that could get pressed that I care about
+                // check all the keys that could get pressed that I care about
                 switch (event.getCode()) {
                     case ENTER:
-						GameplayScreenController.this.enterKeyReleased();
-						break;
+                        GameplayScreenController.this.enterKeyReleased();
+                    break;
+                    default:
+                        // ignore other button presses
+                    break;
                 }
             }
         });
@@ -240,7 +248,7 @@ public class GameplayScreenController extends Controller {
     // Real Methods //
     //////////////////
 
-	//// key handler methods ////
+    //// key handler methods ////
 
     /**
      * executes when enter key is pressed
@@ -256,7 +264,7 @@ public class GameplayScreenController extends Controller {
         System.out.println("Enter key released");
     }
 
-	//// button handler methods ////
+    //// button handler methods ////
 
     /**
      * executes when the back button on the Gameplay Screen
