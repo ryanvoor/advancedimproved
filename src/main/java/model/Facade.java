@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 
 // javafx imports
 import javafx.scene.canvas.Canvas;
+import javafx.scene.paint.Color;
 
 // this project imports
 import model.map.Map;
@@ -44,4 +45,40 @@ public class Facade {
         return Map.buildMap(mapFilePath);
     }
 
+    /**
+     * given an X-coordinate in pixels returns
+     * the tile column on a Map that would contain those coordinates
+     * @param xCoordinate the X coordinate that is contained by the
+     * Tile that will be returned
+     * @return int the column that contains the parameter coordinate
+     */
+    public static int getColumnFromCoordinate(int xCoordinate) {
+        return Map.getColumnFromCoordinate(xCoordinate);
+    }
+
+    /**
+     * given a Y-coordinate in pixels returns
+     * the tile row on this Map that contains those coordinates
+     * @param yCoordinate the Y coordinate that is contained by the
+     * Tile that will be returned
+     * @return int the row that contains the parameter coordinate
+     */
+    public static int getRowFromCoordinate(int yCoordinate) {
+        return Map.getRowFromCoordinate(yCoordinate);
+    }
+
+    /**
+     * tint the tile at the parameter indices to the parameter
+     * color and alpha
+     * @param mapCanvas the canvas upon which this Map is drawn
+     * @param columnIndex the X-Index of the Tile that we are tinting
+     * @param rowIndex the Y-Index of the Tile that we are tinting
+     * @param color the Color to tint the Tile
+     * @param alpha the Alpha value used to determine transparency,
+     * between 0.0 and 1.0 and lower is more transparent
+     */
+    public static void tintTile(Canvas mapCanvas,
+        int columnIndex, int rowIndex, Color color, double alpha) {
+        Map.tintTile(mapCanvas, columnIndex, rowIndex, color, alpha);
+    }
 }

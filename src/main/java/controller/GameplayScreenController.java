@@ -49,8 +49,6 @@ public class GameplayScreenController extends Controller {
         // draw the Map onto the screen
         Facade.drawMap(map, mapCanvas);
 
-        // TODO all the times the map class is accessed directly below
-        // this comment need to be moved to Facade methods
         // set up mouse event handler
         mapCanvas.addEventHandler(MouseEvent.MOUSE_CLICKED,
         new EventHandler<MouseEvent>() {
@@ -60,11 +58,11 @@ public class GameplayScreenController extends Controller {
                 // select the tile that gets clicked on
                 GameplayScreenController.this.setSelectedColumn(
                     // cast this because I don't care about partial pixel values
-                    map.getColumnFromCoordinate((int) e.getX())
+                    Facade.getColumnFromCoordinate((int) e.getX())
                 );
                 GameplayScreenController.this.setSelectedRow(
                     // cast this because I don't care about partial pixel values
-                    map.getRowFromCoordinate((int) e.getY())
+                    Facade.getRowFromCoordinate((int) e.getY())
                 );
 
             }
@@ -99,7 +97,7 @@ public class GameplayScreenController extends Controller {
                 Facade.drawMap(map, mapCanvas);
 
                 // highlight the selected Tile
-                map.tintTile(
+                Facade.tintTile(
                     mapCanvas,
                     GameplayScreenController.this.getSelectedColumn(),
                     GameplayScreenController.this.getSelectedRow(),

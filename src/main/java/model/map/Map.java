@@ -323,14 +323,18 @@ public class Map implements Iterable<Tile> {
         }
     }
 
+    ///////////////////
+    // Class methods //
+    ///////////////////
+
     /**
      * given an X-coordinate in pixels returns
      * the tile column on this Map that contains those coordinates
-     * @param xPos the X coordinate that is contained by the
+     * @param xCoordinate the X coordinate that is contained by the
      * Tile that will be returned
      * @return int the column that contains the parameter coordinate
      */
-    public int getColumnFromCoordinate(int xCoordinate) {
+    public static int getColumnFromCoordinate(int xCoordinate) {
         // grab the pixel width of a single Tile
         int widthOfATile = Tile.getWidthOfATileInPixels();
 
@@ -342,11 +346,11 @@ public class Map implements Iterable<Tile> {
     /**
      * given a Y-coordinate in pixels returns
      * the tile row on this Map that contains those coordinates
-     * @param yPos the Y coordinate that is contained by the
+     * @param yCoordinate the Y coordinate that is contained by the
      * Tile that will be returned
      * @return int the row that contains the parameter coordinate
      */
-    public int getRowFromCoordinate(int yCoordinate) {
+    public static int getRowFromCoordinate(int yCoordinate) {
         // grab the pixel height of a single Tile
         int heightOfATile = Tile.getHeightOfATileInPixels();
 
@@ -365,7 +369,7 @@ public class Map implements Iterable<Tile> {
      * @param alpha the Alpha value used to determine transparency,
      * between 0.0 and 1.0 and lower is more transparent
      */
-    public void tintTile(Canvas mapCanvas,
+    public static void tintTile(Canvas mapCanvas,
         int columnIndex, int rowIndex, Color color, double alpha) {
         // grab the tile width and height
         int widthOfATile  = Tile.getWidthOfATileInPixels();
