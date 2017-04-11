@@ -35,11 +35,6 @@ public class GameplayScreenController extends Controller {
     public void setupController() {
         super.setupController();
 
-        // TODO restructure this so MainFXApplication can just pass
-        // the Map to this method? then I could just have a nice
-        // call to the actually overriden version of setupController once
-        // I've set the Map myself
-
         // make sure that the map has been set
         // basically we need the setMap method to have
         // been called before we can run this method successfully
