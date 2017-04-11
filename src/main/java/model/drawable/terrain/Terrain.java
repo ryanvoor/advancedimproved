@@ -57,6 +57,8 @@ public abstract class Terrain implements Drawable {
 
     @Override
     public Image getImage(long time) {
+        // just ignore the time parameter since this
+        // class isn't animated
         return new Image(this.getImageFileUrl());
     }
 }
