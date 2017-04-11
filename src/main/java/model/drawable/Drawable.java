@@ -32,6 +32,11 @@ public interface Drawable {
 
     // TODO once restructuring happens I ought to have
     // some methods w/o default implementations again
+    // I think that the best plan is probably to just
+    // make all the classes that implement this class
+    // have ArrayList's of image urls. If you dont want
+    // to be animated then you just only put one image
+    // url into the constructor
 
     //////////////////////////////////////////
     // Methods with Default Implementations //
