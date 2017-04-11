@@ -38,7 +38,7 @@ public class GameplayScreenController extends Controller {
         // make sure that the map has been set
         // basically we need the setMap method to have
         // been called before we can run this method successfully
-        if (null == map) {
+        if (null == this.getMap()) {
             System.out.println(
                 "Map cannot be null when "
                 + "GameplayScreenController is being setup"
