@@ -85,9 +85,9 @@ public abstract class TileOccupant implements Drawable {
      * in the animation based on the parameter time
      */
     public Image getCurrentImage(long time) {
-        // TODO I need to move that animation constant out of this
-        // method and to like a static centralized place somewhere
-        // I dont necessarily intend to use it anywhere else but
+        // TODO I need to move that animation constant or this whole method
+        // out of this class/method and to like a static centralized
+        // place somewhere I dont necessarily intend to use it anywhere else but
         // that would be a solid idea just for style and consistency
         // purposes
 
