@@ -52,8 +52,9 @@ public class GameplayScreenController extends Controller {
         Scene scene      = this.getScene();
 
         // draw the Map onto the screen
-        // TODO change this to an overloaded method in Facade rather
-        // than hardcoded here
+        // this call draws the Map before the AnimationTimer gets
+        // set up so this is the only time that we should be passing
+        // in time = 0
         Facade.drawMap(map, mapCanvas, 0);
 
         // TODO move these event handlers and the animation timer into
@@ -134,10 +135,6 @@ public class GameplayScreenController extends Controller {
                     mapCanvas.getHeight(),
                     mapCanvas.getWidth()
                 );
-
-                // TODO pass 'now' to this drawMap call and add logic/capacity
-                // to the Terrain and TileOccupant classes to use 'now'
-                // to draw the different images for animation to happen
 
                 // redraw the map
                 Facade.drawMap(map, mapCanvas, now);
