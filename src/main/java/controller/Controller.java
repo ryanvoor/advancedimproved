@@ -51,9 +51,16 @@ public abstract class Controller {
      * the javafx classes)
      */
     public void setupController() {
-        // for now do nothing
-        // this may change as the controllers grow in complexity
-        return;
+        // make sure that the scene has been set
+        // basically we need the setScene method to have
+        // been called before we can run this method successfully
+        if (null == this.getScene()) {
+            System.out.println(
+                "Scene cannot be null when "
+                + "a Controller is being setup"
+            );
+            System.exit(0);
+        }
     }
 
 
