@@ -23,6 +23,9 @@ public class GameplayScreenController extends Controller {
 
     // regular instance variables
     private Map map;
+    // TODO change these to Integer so they can be null and I can
+    // write a helper method to check if the User has selected
+    // anything or not
     private int selectedColumn;
     private int selectedRow;
 
