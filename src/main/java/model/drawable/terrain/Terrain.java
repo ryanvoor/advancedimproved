@@ -55,13 +55,8 @@ public abstract class Terrain implements Drawable {
         return this.imageFileUrl;
     }
 
-    /**
-      * getter for the Image that should be displayed
-     * for this Terrain
-     * @return Image the image that should be displayed
-     * for this Terrain
-     */
-    public Image getImage() {
+    @Override
+    public Image getImage(long time) {
         return new Image(this.getImageFileUrl());
     }
 }

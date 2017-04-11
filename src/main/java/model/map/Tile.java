@@ -128,7 +128,7 @@ public class Tile {
     public void draw(Canvas canvas, int xPosition, int yPosition, long time) {
         // grab the terrain and draw it on the canvas
         Terrain terrain = this.getTerrain();
-        terrain.draw(canvas, xPosition, yPosition);
+        terrain.draw(canvas, xPosition, yPosition, time);
 
         // if this Tile has an occupant, then grab
         // it and draw it on the canvas
