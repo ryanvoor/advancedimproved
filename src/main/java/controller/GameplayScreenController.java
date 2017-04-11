@@ -23,11 +23,9 @@ public class GameplayScreenController extends Controller {
 
     // regular instance variables
     private Map map;
-    // TODO change these to Integer so they can be null and I can
-    // write a helper method to check if the User has selected
-    // anything or not
     private int selectedColumn;
     private int selectedRow;
+    private boolean aTileIsSelected;
 
     // FXML instance variables
     // these get set automatically by javafx and the fxml
@@ -71,18 +69,16 @@ public class GameplayScreenController extends Controller {
                 // execute this method when user clicks on the canvas
                 @Override
                 public void handle(MouseEvent e) {
+                    // unselect the tile that was previously selected
+                    GameplayScreenController.this.unselectCurrentTile();
+
                     // select the tile that gets clicked on
-                    GameplayScreenController.this.setSelectedColumn(
+                    GameplayScreenController.this.selectTile(
                         // cast this because I don't care about
                         // partial pixel values
-                        Facade.getColumnFromCoordinate((int) e.getX())
-                    );
-                    GameplayScreenController.this.setSelectedRow(
-                        // cast this because I don't care about
-                        // partial pixel values
+                        Facade.getColumnFromCoordinate((int) e.getX()),
                         Facade.getRowFromCoordinate((int) e.getY())
                     );
-
                 }
             });
 
@@ -143,13 +139,15 @@ public class GameplayScreenController extends Controller {
                 Facade.drawMap(map, mapCanvas, now);
 
                 // highlight the selected Tile
-                Facade.tintTile(
-                    mapCanvas,
-                    GameplayScreenController.this.getSelectedColumn(),
-                    GameplayScreenController.this.getSelectedRow(),
-                    Color.BLUE,
-                    0.3
-                );
+                if (GameplayScreenController.this.getATileIsSelected()) {
+                    Facade.tintTile(
+                        mapCanvas,
+                        GameplayScreenController.this.getSelectedColumn(),
+                        GameplayScreenController.this.getSelectedRow(),
+                        Color.BLUE,
+                        0.3
+                    );
+                }
             }
         };
 
@@ -188,7 +186,14 @@ public class GameplayScreenController extends Controller {
      * @return int the column on the map that the
      * user currently has selected
      */
-    public int getSelectedColumn() {
+    private int getSelectedColumn() {
+        if (!this.getATileIsSelected()) {
+            // TODO change these to an exception that makes more sense
+            // my custom exception class should probably be a subclass
+            // of runtime exception
+            throw new RuntimeException("tried to get selected column "
+                + "when a tile was not selected");
+        }
         return this.selectedColumn;
     }
 
@@ -198,8 +203,25 @@ public class GameplayScreenController extends Controller {
      * @return int the row on the map that the
      * user currently has selected
      */
-    public int getSelectedRow() {
+    private int getSelectedRow() {
+        if (!this.getATileIsSelected()) {
+            // TODO change these to an exception that makes more sense
+            // my custom exception class should probably be a subclass
+            // of runtime exception
+            throw new RuntimeException("tried to get selected row "
+                + "when a tile was not selected");
+        }
         return this.selectedRow;
+    }
+
+    /**
+     * returns whether the user currently has a Tile
+     * on the Map selected
+     * @return boolean whether the user currently has
+     * a Tile on the Map selected
+     */
+    private boolean getATileIsSelected() {
+        return this.aTileIsSelected;
     }
 
 
@@ -245,10 +267,48 @@ public class GameplayScreenController extends Controller {
         this.selectedRow = selectedRow;
     }
 
+    /**
+     * setter for whether the user currently has
+     * a Tile selected
+     * @param boolean whether the user currently has
+     * a Tile selected
+     */
+    public void setATileIsSelected(boolean aTileIsSelected) {
+        this.aTileIsSelected = aTileIsSelected;
+    }
+
 
     //////////////////
     // Real Methods //
     //////////////////
+
+    /**
+     * unselects the Tile that user has
+     * selected if any
+     */
+    private void unselectCurrentTile() {
+        // simply set the controller to not acknowlege
+        // that the user has a Tile selected
+        this.setATileIsSelected(false);
+    }
+
+    /**
+     * selects the Tile that is located at the parameter
+     * column and row
+     * @param selectedColumn the column of the Tile that the
+     * user is selecting
+     * @param selectedRow the row of the Tile that the
+     * user is selecting
+     */
+    private void selectTile(int selectedColumn, int selectedRow) {
+        // set this controller to acknowledge that the user
+        // has a Tile selected
+        this.setATileIsSelected(true);
+
+        // set which Tile the user has selected
+        this.setSelectedColumn(selectedColumn);
+        this.setSelectedRow(selectedRow);
+    }
 
     //// key handler methods ////
 
@@ -265,6 +325,7 @@ public class GameplayScreenController extends Controller {
     private void enterKeyReleased() {
         System.out.println("Enter key released");
     }
+
 
     //// button handler methods ////
 
