@@ -26,8 +26,8 @@ public class Facade {
      * @param Map the map that will get drawn onto the canvas
      * @param Canvas the canvas upon which the map will get drawn
      */
-    public static void drawMap(Map map, Canvas mapCanvas) {
-        map.draw(mapCanvas);
+    public static void drawMap(Map map, Canvas mapCanvas, long time) {
+        map.draw(mapCanvas, time);
     }
 
     /**

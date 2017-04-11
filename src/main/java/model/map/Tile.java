@@ -125,7 +125,7 @@ public class Tile {
      * @param yPosition the Y position in pixels of the top-left corner
      * of the Tile where it will be drawn
      */
-    public void draw(Canvas canvas, int xPosition, int yPosition) {
+    public void draw(Canvas canvas, int xPosition, int yPosition, long time) {
         // grab the terrain and draw it on the canvas
         Terrain terrain = this.getTerrain();
         terrain.draw(canvas, xPosition, yPosition);
@@ -134,7 +134,7 @@ public class Tile {
         // it and draw it on the canvas
         if (this.hasOccupant()) {
             TileOccupant occupant = this.getOccupant();
-            occupant.draw(canvas, xPosition, yPosition);
+            occupant.draw(canvas, xPosition, yPosition, time);
         }
     }
 }

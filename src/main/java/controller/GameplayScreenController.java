@@ -52,7 +52,9 @@ public class GameplayScreenController extends Controller {
         Scene scene      = this.getScene();
 
         // draw the Map onto the screen
-        Facade.drawMap(map, mapCanvas);
+        // TODO change this to an overloaded method in Facade rather
+        // than hardcoded here
+        Facade.drawMap(map, mapCanvas, 0);
 
         // TODO move these event handlers and the animation timer into
         // their own files (make them subclasses (since that's what they
@@ -138,7 +140,7 @@ public class GameplayScreenController extends Controller {
                 // to draw the different images for animation to happen
 
                 // redraw the map
-                Facade.drawMap(map, mapCanvas);
+                Facade.drawMap(map, mapCanvas, now);
 
                 // highlight the selected Tile
                 Facade.tintTile(

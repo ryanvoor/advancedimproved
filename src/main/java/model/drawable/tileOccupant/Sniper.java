@@ -1,5 +1,9 @@
 package model.drawable.tileOccupant;
 
+// java standard library imports
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * represents a Sniper TileOccupant
  * for more information about TileOccupants
@@ -12,7 +16,15 @@ public class Sniper extends TileOccupant {
      * constructor for the Sniper class
      */
     public Sniper() {
-        super("file:lib/images/resized/"
-            + "megaman_pointing_transparent_resized.gif");
+        super(
+            new ArrayList<String>(
+                Arrays.asList(
+                    "file:lib/images/resized/"
+                        + "megaman_pointing_transparent_resized.gif",
+                    "file:lib/images/resized/"
+                        + "megaman_jumping_transparent_resized.gif"
+                )
+            )
+        );
     }
 }

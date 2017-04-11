@@ -156,7 +156,7 @@ public class Map implements Iterable<Tile> {
      * draws this Map on the passed in Canvas object
      * @param canvas the Canvas object upon which we will draw this map
      */
-    public void draw(Canvas canvas) {
+    public void draw(Canvas canvas, long time) {
         // grab the iterator object
         // this cast is necessary because the iterator
         // method returns an Iterator and I need to use
@@ -191,7 +191,7 @@ public class Map implements Iterable<Tile> {
             // the canvas that we're drawing on
 
             // draw the current tile onto the canvas
-            currentTile.draw(canvas, xPosition, yPosition);
+            currentTile.draw(canvas, xPosition, yPosition, time);
 
             // update the X and Y positions after we draw the map because
             // the indices from before the next() call must be used to
