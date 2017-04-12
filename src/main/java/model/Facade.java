@@ -81,4 +81,21 @@ public class Facade {
         int columnIndex, int rowIndex, Color color, double alpha) {
         Map.tintTile(mapCanvas, columnIndex, rowIndex, color, alpha);
     }
+
+    /**
+     * returns whether the Tile located at the parameter column
+     * and row is occupied in the parameter Map
+     * @param map the Map that we are checking inside to see if
+     * the Tile is occupied
+     * @param xIndex the column that the Tile we are checking is
+     * located in
+     * @param yIndex the row that the tile we are checking is
+     * located in
+     * @return boolean whether the Tile in the parameter Map and
+     * located at the parameter column and row is occupied
+     */
+    public static boolean tileIsOccupied(Map map,
+        int xIndex, int yIndex) {
+        return map.tileIsOccupied(xIndex, yIndex);
+    }
 }

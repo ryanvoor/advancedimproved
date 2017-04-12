@@ -342,7 +342,8 @@ public class GameplayScreenController extends Controller {
      */
     private void clearMapCanvas() {
         // grab the mapCanvas
-        Canvas mapCanvas = this.getMapCanvas();
+        Canvas mapCanvas                = this.getMapCanvas();
+        GraphicsContext graphicsContext = mapCanvas.getGraphicsContext2D();
 
         // clear the canvas
         graphicsContext.clearRect(

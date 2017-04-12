@@ -153,6 +153,24 @@ public class Map implements Iterable<Tile> {
     //////////////////
 
     /**
+     * returns whether the Tile located at the parameter
+     * indices is occupied
+     * @param xIndex the index of the Column that contains
+     * the Tile that we are interested in
+     * @param yIndex the index of the Row that contains
+     * the Tile that we are interested in
+     * @return boolean whether the Tile located at the parameter
+     * indices is occupied
+     */
+    public boolean tileIsOccupied(int xIndex, int yIndex) {
+        // grab the Tile that we are interested in
+        Tile tile = this.getTileFromIndices(xIndex, yIndex);
+
+        // return whether that Tile is occupied
+        return tile.hasOccupant();
+    }
+
+    /**
      * draws this Map on the passed in Canvas object
      * @param canvas the Canvas object upon which we will draw this map
      */
