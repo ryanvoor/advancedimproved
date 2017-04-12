@@ -93,6 +93,9 @@ public class GameplayScreenController extends Controller {
                     case ENTER:
                         GameplayScreenController.this.enterKeyPressed();
                         break;
+                    case ESCAPE:
+                        GameplayScreenController.this.escapeKeyPressed();
+                        break;
                     default:
                         // ignore other button presses
                     break;
@@ -313,17 +316,29 @@ public class GameplayScreenController extends Controller {
     //// key handler methods ////
 
     /**
-     * executes when enter key is pressed
+     * executes when enter key is pressed,
+     * for now it just prints something out
+     * for testing purposes
      */
     private void enterKeyPressed() {
         System.out.println("Enter key pressed");
     }
 
     /**
-     * executes when enter key is released
+     * executes when enter key is released,
+     * for now it just prints something out
+     * for testing purposes
      */
     private void enterKeyReleased() {
         System.out.println("Enter key released");
+    }
+
+    /**
+     * executes when the esc key is pressed,
+     * unselects the currently selected Tile
+     */
+    private void escapeKeyPressed() {
+        this.unselectCurrentTile();
     }
 
 
