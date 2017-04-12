@@ -2,6 +2,7 @@ package model.drawable.terrain;
 
 // this project imports
 import model.drawable.tileOccupant.TileOccupant;
+import model.drawable.tileOccupant.FootMovementUnit;
 
 /**
  * represents a Forest Terrain
@@ -11,6 +12,9 @@ import model.drawable.tileOccupant.TileOccupant;
  */
 public class Forest extends Terrain {
 
+    // class variables
+    private static final int footMovementUnitCost = 1;
+
     /**
      * constructor for the Forest class
      */
@@ -18,12 +22,35 @@ public class Forest extends Terrain {
         super("File:lib/images/resized/forest_resized.png");
     }
 
+    /////////////
+    // Getters //
+    /////////////
+
+    /**
+     * getter for the movement cost of a foot movement unit
+     * to move onto a Tile with this Terrain
+     * @return int the movement cost of a foot movement unit
+     * to move onto a Tile with this Terrain
+     */
+    private int getFootMovementUnitCost() {
+        return Forest.footMovementUnitCost;
+    }
+
+
+    //////////////////
+    // Real Methods //
+    //////////////////
+
     @Override
     public int getMovementCost(TileOccupant unit) {
-        // TODO
-        //if (unit instanceof ???) {
-        //    return ???;
-        //}
-        return 0;
+        // one if-statement for each type of unit
+        // that can move onto a Tile with this Terrain
+        if (unit instanceof FootMovementUnit) {
+            return this.getFootMovementUnitCost();
+        }
+
+        // catch-all for any unit-types that cannot
+        // move onto a Tile with this Terrain
+        return Integer.MAX_VALUE;
     }
 }

@@ -32,7 +32,11 @@ public abstract class Terrain implements Drawable {
 
     /**
      * returns the movement cost that a unit needs to pay
-     * to move onto a Tile that has this Terrain
+     * to move onto a Tile that has this Terrain,
+     * returns Integer.MAX_VALUE if the Unit cannot move
+     * onto a Tile with this Terrain,
+     * NOTE: the implementations of this methods will need
+     * to be updated every time a new unit-type is added
      * @param unit the TileOccupant that is attempting
      * to move onto the Tile that has this Terrain
      * @return int the movement cost that the parameter

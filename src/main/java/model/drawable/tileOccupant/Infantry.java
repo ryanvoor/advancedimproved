@@ -10,7 +10,7 @@ import java.util.Arrays;
  * see the TileOccupant class
  * @author Ryan Voor
  */
-public class Infantry extends TileOccupant {
+public class Infantry extends FootMovementUnit {
 
     /**
      * constructor for the Infantry class
