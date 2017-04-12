@@ -131,13 +131,7 @@ public class GameplayScreenController extends Controller {
                     = mapCanvas.getGraphicsContext2D();
 
                 // clear the map
-                // TODO put this into a helper method in this controller
-                graphicsContext.clearRect(
-                    0,
-                    0,
-                    mapCanvas.getHeight(),
-                    mapCanvas.getWidth()
-                );
+                GameplayScreenController.this.clearMapCanvas();
 
                 // redraw the map
                 Facade.drawMap(map, mapCanvas, now);
@@ -339,6 +333,23 @@ public class GameplayScreenController extends Controller {
             this.getMap(),
             this.getSelectedColumn(),
             this.getSelectedRow()
+        );
+    }
+
+    /**
+     * completely clears the Canvas on this Screen with
+     * the Map drawn on it
+     */
+    private void clearMapCanvas() {
+        // grab the mapCanvas
+        Canvas mapCanvas = this.getMapCanvas();
+
+        // clear the canvas
+        graphicsContext.clearRect(
+            0,
+            0,
+            mapCanvas.getHeight(),
+            mapCanvas.getWidth()
         );
     }
 
