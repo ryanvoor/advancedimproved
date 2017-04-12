@@ -8,11 +8,7 @@ import java.util.ArrayList;
  * moves using its feet
  * @author Ryan Voor
  */
-public abstract class FootMovementUnit extends TileOccupant {
-
-    // TODO implement ability for all subclasses of this to know how far
-    // they can move (total not counting movement costs since that's
-    // handled in the Terrain classes)
+public abstract class FootMovementUnit extends Unit {
 
     /**
      * constructor for the FootMovementUnit class
@@ -20,7 +16,8 @@ public abstract class FootMovementUnit extends TileOccupant {
      * the Images that should be shown on the Tile
      * that this FootMovementUnit occupies
      */
-    public FootMovementUnit(ArrayList<String> fileImageUrls) {
-        super(fileImageUrls);
+    public FootMovementUnit(ArrayList<String> fileImageUrls,
+        int movementRange) {
+        super(fileImageUrls, movementRange);
     }
 }

@@ -24,7 +24,8 @@ public class Sniper extends FootMovementUnit {
                     "file:lib/images/resized/"
                         + "megaman_jumping_transparent_resized.gif"
                 )
-            )
+            ),
+            2
         );
     }
 }

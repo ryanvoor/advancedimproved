@@ -22,7 +22,8 @@ public class Infantry extends FootMovementUnit {
                     "file:lib/images/resized/"
                         + "megaman_running_transparent_resized.gif"
                 )
-            )
+            ),
+            3
         );
     }
 }
