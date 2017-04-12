@@ -131,6 +131,7 @@ public class GameplayScreenController extends Controller {
                     = mapCanvas.getGraphicsContext2D();
 
                 // clear the map
+                // TODO put this into a helper method in this controller
                 graphicsContext.clearRect(
                     0,
                     0,
@@ -151,6 +152,15 @@ public class GameplayScreenController extends Controller {
                         0.3
                     );
                 }
+
+                // TODO if the tile that is selected is occupied
+                // then highlight where the tile occupant can move
+                // this will necessitate a new method or two in
+                // Facade, a pass-through method in Map that checks
+                // if a Tile is occupied, a new real method in Map
+                // that tints each of the tiles that need to be
+                // highlighted (should probably accept a color and
+                // alpha from this controller to be consistent)
             }
         };
 
