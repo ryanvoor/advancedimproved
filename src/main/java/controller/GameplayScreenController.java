@@ -337,4 +337,14 @@ public class GameplayScreenController extends Controller {
     private void backButtonPressed() {
         MainFXApplication.showMapSelectScreen();
     }
+
+    /**
+     * executes when the clear selection button on the
+     * Gameplay Screen is pressed, it unselects the
+     * currently selected Tile
+     */
+    @FXML
+    private void clearSelectionButtonPressed() {
+        this.unselectCurrentTile();
+    }
 }

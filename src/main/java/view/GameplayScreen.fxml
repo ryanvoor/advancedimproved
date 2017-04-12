@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: linear-gradient(#474040,  #242323);" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GameplayScreenController">
+<BorderPane prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: linear-gradient(#474040,  #242323);" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GameplayScreenController">
    <top>
       <VBox BorderPane.alignment="CENTER" />
    </top>
@@ -14,12 +19,17 @@
       <Canvas fx:id="mapCanvas" height="500.0" width="624.0" BorderPane.alignment="CENTER_LEFT" />
    </left>
    <right>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="500.0" prefWidth="120.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="backButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#backButtonPressed" prefHeight="26.0" prefWidth="118.0" text="Back" textAlignment="CENTER">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin></Button>
+            <Button fx:id="clearSelectionButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#clearSelectionButtonPressed" text="Clear Selection" textAlignment="CENTER">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Button>
          </children>
       </VBox>
    </right>
