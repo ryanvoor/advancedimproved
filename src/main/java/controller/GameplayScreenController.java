@@ -142,8 +142,9 @@ public class GameplayScreenController extends Controller {
                 // redraw the map
                 Facade.drawMap(map, mapCanvas, now);
 
-                // highlight the selected Tile
+                // if there is a currently selected Tile
                 if (GameplayScreenController.this.getATileIsSelected()) {
+                    // highlight the selected Tile
                     Facade.tintTile(
                         mapCanvas,
                         GameplayScreenController.this.getSelectedColumn(),
@@ -151,16 +152,19 @@ public class GameplayScreenController extends Controller {
                         Color.BLUE,
                         0.3
                     );
-                }
 
-                // TODO if the tile that is selected is occupied
-                // then highlight where the tile occupant can move
-                // this will necessitate a new method or two in
-                // Facade, a pass-through method in Map that checks
-                // if a Tile is occupied, a new real method in Map
-                // that tints each of the tiles that need to be
-                // highlighted (should probably accept a color and
-                // alpha from this controller to be consistent)
+                    // if the selected Tile is occupied then highlight all
+                    // the Tiles that the TileOccupant can move to
+                    if (GameplayScreenController.this.selectedTileIsOccupied()) {
+                        // TODO if the tile that is selected is occupied
+                        // then highlight where the tile occupant can move
+                        // this will necessitate a new method in
+                        // Facade, and a new real method in Map
+                        // that tints each of the tiles that need to be
+                        // highlighted (should probably accept a color and
+                        // alpha from this controller to be consistent)
+                    }
+                }
             }
         };
 
@@ -321,6 +325,21 @@ public class GameplayScreenController extends Controller {
         // set which Tile the user has selected
         this.setSelectedColumn(selectedColumn);
         this.setSelectedRow(selectedRow);
+    }
+
+    /**
+     * returns whether the currently selected Tile is occupied
+     * or not, expects that there IS a currently selected Tile
+     * when this method is called
+     * @return boolean whether the currently selected Tile is
+     * occupied or not
+     */
+    private boolean selectedTileIsOccupied() {
+        return Facade.tileIsOccupied(
+            this.getMap(),
+            this.getSelectedColumn(),
+            this.getSelectedRow()
+        );
     }
 
     //// key handler methods ////
