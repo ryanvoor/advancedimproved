@@ -14,6 +14,9 @@ import model.drawable.tileOccupant.TileOccupant;
  */
 public abstract class Terrain implements Drawable {
 
+    // TODO once I have the ability to know here a unit CAN move
+    // then I will implement the ability to move units
+
     // constants
     private String imageFileUrl;
 

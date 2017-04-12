@@ -10,6 +10,10 @@ import java.util.ArrayList;
  */
 public abstract class FootMovementUnit extends TileOccupant {
 
+    // TODO implement ability for all subclasses of this to know how far
+    // they can move (total not counting movement costs since that's
+    // handled in the Terrain classes)
+
     /**
      * constructor for the FootMovementUnit class
      * @param fileImageUrls the urls of the files of
