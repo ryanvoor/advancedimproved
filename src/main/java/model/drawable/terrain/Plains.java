@@ -13,7 +13,7 @@ import model.drawable.tileOccupant.FootMovementUnit;
 public class Plains extends Terrain {
 
     // class variables
-    private static final int footMovementUnitCost = 1;
+    private static final int FOOT_MOVEMENT_UNIT_COST = 1;
 
     /**
      * constructor for the Plains class
@@ -33,7 +33,7 @@ public class Plains extends Terrain {
      * to move onto a Tile with this Terrain
      */
     private int getFootMovementUnitCost() {
-        return Plains.footMovementUnitCost;
+        return Plains.FOOT_MOVEMENT_UNIT_COST;
     }
 
 

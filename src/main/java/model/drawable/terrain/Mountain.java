@@ -13,7 +13,7 @@ import model.drawable.tileOccupant.FootMovementUnit;
 public class Mountain extends Terrain {
 
     // class variables
-    private static final int footMovementUnitCost = 2;
+    private static final int FOOT_MOVEMENT_UNIT_COST = 2;
 
     /**
      * constructor for the Mountain class
@@ -33,7 +33,7 @@ public class Mountain extends Terrain {
      * to move onto a Tile with this Terrain
      */
     private int getFootMovementUnitCost() {
-        return Mountain.footMovementUnitCost;
+        return Mountain.FOOT_MOVEMENT_UNIT_COST;
     }
 
 
