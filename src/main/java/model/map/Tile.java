@@ -9,6 +9,8 @@ import model.drawable.tileOccupant.TileOccupant;
 
 // TODO at some point this class will need to be modified to hold
 // multiple occupants so the gameplay dream can be implemented
+// TODO also alter this class to hold buildings since those will
+// be separate from TileOccupants soon enough (if not already)
 
 /**
  * Class that represents a Tile on a Map
