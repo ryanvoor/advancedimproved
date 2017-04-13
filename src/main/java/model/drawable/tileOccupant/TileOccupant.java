@@ -18,8 +18,13 @@ import model.drawable.Drawable;
  */
 public abstract class TileOccupant implements Drawable {
 
+    // TODO maybe rework this and the unit class such that buildings
+    // are their own thing unrelated to TileOccupants. That way
+    // Tiles can hold a Terrain, 2 units, and a building
+
     // instance variables
     private ArrayList<String> fileImageUrls;
+    private int movementRange;
 
     /**
      * constructor for the TileOccupant class
@@ -27,8 +32,9 @@ public abstract class TileOccupant implements Drawable {
      * the Images that should be shown on the Tile
      * that this TileOccupant occupies
      */
-    public TileOccupant(ArrayList<String> fileImageUrls) {
+    public TileOccupant(ArrayList<String> fileImageUrls, int movementRange) {
         this.fileImageUrls = fileImageUrls;
+        this.movementRange = movementRange;
     }
 
     /////////////
@@ -108,5 +114,15 @@ public abstract class TileOccupant implements Drawable {
 
         // return it
         return images.get(indexOfCurrentImage);
+    }
+
+    /**
+     * getter for the movementRange of this TileOccupant,
+     * this movementRange is before Terrain calculations
+     * are taken into account
+     * @return int the movementRange of this Unit
+     */
+    public int getMovementRange() {
+        return this.movementRange;
     }
 }

@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * moves using its feet
  * @author Ryan Voor
  */
-public abstract class FootMovementUnit extends Unit {
+public abstract class FootMovementUnit extends TileOccupant {
 
     /**
      * constructor for the FootMovementUnit class
