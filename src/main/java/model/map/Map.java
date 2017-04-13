@@ -1,6 +1,7 @@
 package model.map;
 
 // java standard library imports
+import java.awt.Point;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -30,6 +31,9 @@ import model.drawable.tileOccupant.Sniper;
  * @version 1.0
  */
 public class Map implements Iterable<Tile> {
+
+    // TODO possible rework the whole project to use Points
+    // rather than passing 2 parameters all the time
 
     /*
     ---------------------------------------------------------------
@@ -169,6 +173,55 @@ public class Map implements Iterable<Tile> {
         // return whether that Tile is occupied
         return tile.hasOccupant();
     }
+
+    /**
+     * highlights all the Tiles that the occupant located on the
+     * Tile specified by the parameter indices can move to
+     * @param mapCanvas the Canvas upon which this Map is drawn
+     * @param xIndex the column that the Tile we are checking is
+     * located in
+     * @param yIndex the row that the Tile we are checking is
+     * located in
+     * @param color the Color to tint the Tiles
+     * @param alpha the Alpha value used to determine transparency,
+     * between 0.0 and 1.0 and lower is more transparent
+     */
+    public void tintTilesToWhichOccupantCanMove(Canvas mapCanvas,
+        int xIndex, int yIndex, Color color, double alpha) {
+        // grab the Tile that the occupant we care about is sitting on
+        Tile tileInQuestion = this.getTileFromIndices(xIndex, yIndex);
+
+        // grab the occupant from that Tile
+        TileOccupant occupantInQuestion = tileInQuestion.getOccupant();
+
+        // kick off the recursion that will highlight the tiles
+        this.tintTilesToWhichOccupantCanMoveVisit(
+            new Point(xIndex, yIndex),
+            new ArrayList<Point>(),
+            occupantInQuestion.getMovementRange(),
+            occupantInQuestion,
+            mapCanvas,
+            color,
+            alpha
+        );
+
+        // TODO notes/thoughts on what will need to happen next
+        // I anticipate writing some helper methods:
+        //     getTileToTheNorth(xIndex, yIndex)
+        //     getTileToTheEast(xIndex, yIndex)
+        //     getTileToTheSouth(xIndex, yIndex)
+        //     getTileToTheWest(xIndex, yIndex)
+
+        // recursion will essentially perform depth first search
+        // and check if
+    }
+
+    /**
+     * TODO
+     */
+    //private void tintTilesToWhichOccupantCanMoveVisit() {
+    //  // TODO
+    //}
 
     /**
      * draws this Map on the passed in Canvas object

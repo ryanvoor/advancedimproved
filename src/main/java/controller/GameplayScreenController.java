@@ -150,13 +150,16 @@ public class GameplayScreenController extends Controller {
                     // if the selected Tile is occupied then highlight all
                     // the Tiles that the TileOccupant can move to
                     if (GameplayScreenController.this.selectedTileIsOccupied()) {
-                        // TODO if the tile that is selected is occupied
+                        // if the tile that is selected is occupied
                         // then highlight where the tile occupant can move
-                        // this will necessitate a new method in
-                        // Facade, and a new real method in Map
-                        // that tints each of the tiles that need to be
-                        // highlighted (should probably accept a color and
-                        // alpha from this controller to be consistent)
+                        Facade.tintTilesToWhichOccupantCanMove(
+                            map,
+                            mapCanvas,
+                            GameplayScreenController.this.getSelectedColumn(),
+                            GameplayScreenController.this.getSelectedRow(),
+                            Color.RED,
+                            0.3
+                        );
                     }
                 }
             }

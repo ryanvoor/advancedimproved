@@ -89,7 +89,7 @@ public class Facade {
      * the Tile is occupied
      * @param xIndex the column that the Tile we are checking is
      * located in
-     * @param yIndex the row that the tile we are checking is
+     * @param yIndex the row that the Tile we are checking is
      * located in
      * @return boolean whether the Tile in the parameter Map and
      * located at the parameter column and row is occupied
@@ -97,5 +97,32 @@ public class Facade {
     public static boolean tileIsOccupied(Map map,
         int xIndex, int yIndex) {
         return map.tileIsOccupied(xIndex, yIndex);
+    }
+
+    /**
+     * highlights all the Tiles that the occupant located on the
+     * Tile specified by the parameter indices can move to
+     * @param map the Map that the Tile and TileOccupant in question
+     * are located on
+     * @param mapCanvas the Canvas upon which this Map is drawn
+     * @param xIndex the column that the Tile we are checking is
+     * located in
+     * @param yIndex the row that the Tile we are checking is
+     * located in
+     * @param color the Color to tint the Tiles
+     * @param alpha the Alpha value used to determine transparency,
+     * between 0.0 and 1.0 and lower is more transparent
+     */
+    public static void tintTilesToWhichOccupantCanMove(Map map,
+        Canvas mapCanvas, int xIndex, int yIndex,
+            Color color, double alpha) {
+        map.tintTilesToWhichOccupantCanMove(
+            mapCanvas,
+            xIndex,
+            yIndex,
+            color,
+            alpha
+        );
+
     }
 }
