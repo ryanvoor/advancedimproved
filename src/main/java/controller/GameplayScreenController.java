@@ -21,6 +21,10 @@ import model.map.Map;
  */
 public class GameplayScreenController extends Controller {
 
+    // TODO should add functionality for hovering over a Tile
+    // this will help with UI as well as the ability to implement
+    // pure keyboard controls
+
     // regular instance variables
     private Map map;
     private int selectedColumn;
