@@ -1,7 +1,6 @@
 package model.map;
 
 // java standard library imports
-import java.awt.Point;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -31,9 +30,6 @@ import model.drawable.tileOccupant.Sniper;
  * @version 1.0
  */
 public class Map implements Iterable<Tile> {
-
-    // TODO possible rework the whole project to use Points
-    // rather than passing 2 parameters all the time
 
     /*
     ---------------------------------------------------------------
@@ -188,40 +184,482 @@ public class Map implements Iterable<Tile> {
      */
     public void tintTilesToWhichOccupantCanMove(Canvas mapCanvas,
         int xIndex, int yIndex, Color color, double alpha) {
+        // TODO finish implementing movement range highlighting
+
+        // TODO try to abstract parts of this method into helper methods
+        // just so that way it will be a litte clearer what is going on
+
+        // TODO so I'm having a problem with an infinite loop i think
+        // ill need to take a look at this and fix please
+
+        //// build the DistanceGrid using Dijkstra's Algorithm         ////
+        //// see: https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm ////
+
         // grab the Tile that the occupant we care about is sitting on
+        // so we can grab the TileOCcupant from that Tile
+        // so we can grab the movement range from that TileOccupant
         Tile tileInQuestion = this.getTileFromIndices(xIndex, yIndex);
-
-        // grab the occupant from that Tile
         TileOccupant occupantInQuestion = tileInQuestion.getOccupant();
+        int movementRange = occupantInQuestion.getMovementRange();
 
-        // kick off the recursion that will highlight the tiles
-        this.tintTilesToWhichOccupantCanMoveVisit(
-            new Point(xIndex, yIndex),
-            new ArrayList<Point>(),
-            occupantInQuestion.getMovementRange(),
-            occupantInQuestion,
-            mapCanvas,
-            color,
-            alpha
+        // set up the DistanceGrid
+        DistanceGrid distanceGrid = new DistanceGrid(
+            this.getNumberOfColumns(),
+            this.getNumberOfRows()
         );
 
-        // TODO notes/thoughts on what will need to happen next
-        // I anticipate writing some helper methods:
-        //     getTileToTheNorth(xIndex, yIndex)
-        //     getTileToTheEast(xIndex, yIndex)
-        //     getTileToTheSouth(xIndex, yIndex)
-        //     getTileToTheWest(xIndex, yIndex)
+        // assign tentative distance values
+        // initial Tile: 0
+        // everything else: infinity (Integer.MAX_VALUE)
+        // DistanceGrid sets values to "infinity" by default so
+        // we only need to set the value for our initial Tile
+        distanceGrid.setDistance(xIndex, yIndex, 0);
 
-        // recursion will essentially perform depth first search
-        // and check if
+        // set initial Tile as current
+        int currentXIndex = xIndex;
+        int currentYIndex = yIndex;
+
+        // check the unvisited Tiles, if the smallest tentative distance
+        // of all the unvisited Tiles is "infinity" then stop looping
+        while (!distanceGrid.allUnvisitedDistancesAreInfinity()) {
+            // for current Tile calculate tentative distances of its
+            // unvisited neighbors and replace their current tentative
+            // distance if the new one is smaller than their current one,
+            // otherwise just leave their current tentative distance alone
+            int northXIndex = currentXIndex;
+            int northYIndex = currentYIndex + 1;
+            // check that we aren't at the edge of the Map and
+            // that this Tile is unvisited
+            if (northYIndex >= 0
+                && !distanceGrid.isVisited(northXIndex, northYIndex)) {
+                // TODO abstract the code in this if statement into a helper
+                // method so i dont have it copied and pasted 4 times
+
+                // grab the Tile to the north of the current Tile so we
+                // can grab the Terrain of that Tile so we can grab the
+                // movement cost of that Tile
+                Tile northTile
+                    = this.getTileFromIndices(northXIndex, northYIndex);
+                Terrain northTerrain  = northTile.getTerrain();
+                int northMovementCost = northTerrain.getMovementCost(occupantInQuestion);
+
+                // grab current north tile distance and current tile distance
+                int currentNorthTileDistance
+                    = distanceGrid.getDistance(northXIndex, northYIndex);
+                int currentTileDistance
+                    = distanceGrid.getDistance(currentXIndex, currentYIndex);
+
+                // use those to calculate the distance that might replace the
+                // north tile distance
+                int potentialNorthTileDistance
+                    = currentTileDistance + northMovementCost;
+
+                // if this new distance to the north tile is shorter than
+                // the existing distance to the north tile
+                if (potentialNorthTileDistance < currentNorthTileDistance) {
+                    // replace the distance
+                    distanceGrid.setDistance(
+                        northXIndex,
+                        northYIndex,
+                        potentialNorthTileDistance
+                    );
+                }
+            }
+
+            int eastXIndex = currentXIndex + 1;
+            int eastYIndex = currentYIndex;
+            // check that we aren't at the edge of the Map and
+            // that this Tile is unvisited
+            if (eastXIndex <= this.getMaxXIndex()
+                && !distanceGrid.isVisited(eastXIndex, eastYIndex)) {
+                // grab the Tile to the east of the current Tile so we
+                // can grab the Terrain of that Tile so we can grab the
+                // movement cost of that Tile
+                Tile eastTile
+                    = this.getTileFromIndices(eastXIndex, eastYIndex);
+                Terrain eastTerrain  = eastTile.getTerrain();
+                int eastMovementCost = eastTerrain.getMovementCost(occupantInQuestion);
+
+                // grab current east tile distance and current tile distance
+                int currentEastTileDistance
+                    = distanceGrid.getDistance(eastXIndex, eastYIndex);
+                int currentTileDistance
+                    = distanceGrid.getDistance(currentXIndex, currentYIndex);
+
+                // use those to calculate the distance that might replace the
+                // east tile distance
+                int potentialEastTileDistance
+                    = currentTileDistance + eastMovementCost;
+
+                // if this new distance to the east tile is shorter than
+                // the existing distance to the east tile
+                if (potentialEastTileDistance < currentEastTileDistance) {
+                    // replace the distance
+                    distanceGrid.setDistance(
+                        eastXIndex,
+                        eastYIndex,
+                        potentialEastTileDistance
+                    );
+                }
+            }
+
+            int southXIndex = currentXIndex;
+            int southYIndex = currentYIndex - 1;
+            // check that we aren't at the edge of the Map and
+            // that this Tile is unvisited
+            if (southYIndex <= this.getMaxYIndex()
+                && !distanceGrid.isVisited(southXIndex, southYIndex)) {
+                // grab the Tile to the south of the current Tile so we
+                // can grab the Terrain of that Tile so we can grab the
+                // movement cost of that Tile
+                Tile southTile
+                    = this.getTileFromIndices(southXIndex, southYIndex);
+                Terrain southTerrain  = southTile.getTerrain();
+                int southMovementCost = southTerrain.getMovementCost(occupantInQuestion);
+
+                // grab current south tile distance and current tile distance
+                int currentSouthTileDistance
+                    = distanceGrid.getDistance(southXIndex, southYIndex);
+                int currentTileDistance
+                    = distanceGrid.getDistance(currentXIndex, currentYIndex);
+
+                // use those to calculate the distance that might replace the
+                // south tile distance
+                int potentialSouthTileDistance
+                    = currentTileDistance + southMovementCost;
+
+                // if this new distance to the south tile is shorter than
+                // the existing distance to the south tile
+                if (potentialSouthTileDistance < currentSouthTileDistance) {
+                    // replace the distance
+                    distanceGrid.setDistance(
+                        southXIndex,
+                        southYIndex,
+                        potentialSouthTileDistance
+                    );
+                }
+            }
+
+            int westXIndex = currentXIndex - 1;
+            int westYIndex = currentYIndex;
+            // check that we aren't at the edge of the Map and
+            // that this Tile is unvisited
+            if (westXIndex >= 0
+                && !distanceGrid.isVisited(westXIndex, westYIndex)) {
+                // grab the Tile to the west of the current Tile so we
+                // can grab the Terrain of that Tile so we can grab the
+                // movement cost of that Tile
+                Tile westTile
+                    = this.getTileFromIndices(westXIndex, westYIndex);
+                Terrain westTerrain  = westTile.getTerrain();
+                int westMovementCost = westTerrain.getMovementCost(occupantInQuestion);
+
+                // grab current west tile distance and current tile distance
+                int currentWestTileDistance
+                    = distanceGrid.getDistance(westXIndex, westYIndex);
+                int currentTileDistance
+                    = distanceGrid.getDistance(currentXIndex, currentYIndex);
+
+                // use those to calculate the distance that might replace the
+                // west tile distance
+                int potentialWestTileDistance
+                    = currentTileDistance + westMovementCost;
+
+                // if this new distance to the west tile is shorter than
+                // the existing distance to the west tile
+                if (potentialWestTileDistance < currentWestTileDistance) {
+                    // replace the distance
+                    distanceGrid.setDistance(
+                        westXIndex,
+                        westYIndex,
+                        potentialWestTileDistance
+                    );
+                }
+            }
+
+
+            // mark the current Tile as visited
+            distanceGrid.setToVisited(currentXIndex, currentYIndex);
+
+
+            // set the unvisited Tile with the smallest tentative
+            // distance to be the new current Tile
+            currentXIndex = distanceGrid.getXIndexOfSmallestUnvisited();
+            currentYIndex = distanceGrid.getYIndexOfSmallestUnvisited();
+        }
+
+        // when we break out of the loop the DistanceGrid should
+        // be completely filled in with the shortest distances to
+        // each Tile
+
+
+        //// highlight all tiles within the movement range ////
+
+        // grab the iterator object
+        // this cast is necessary because the iterator
+        // method returns an Iterator and I need to use
+        // some MapIterator specific methods
+        // this cast is safe because I know that this is
+        // going to return a MapIterator
+        MapIterator mapIterator = (MapIterator) this.iterator();
+
+        // get the xIndex
+        int currentXIndexForHighlighting = mapIterator.getCurrentXIndex();
+
+        // get the yIndex
+        int currentYIndexForHighlighting = mapIterator.getCurrentYIndex();
+
+        // iterate through all the tiles
+        while (mapIterator.hasNext()) {
+            // move the Iterator to the next Tile
+            // don't assign to anything since we don't actually
+            // need the Tile object for this loop
+            mapIterator.next();
+
+            // grab the current Distance
+            int currentDistance = distanceGrid.getDistance(
+                currentXIndexForHighlighting,
+                currentYIndexForHighlighting
+            );
+
+            // if the current Tile is within the movement range
+            if (currentDistance <= movementRange) {
+                // tint the current Tile
+                Map.tintTile(
+                    mapCanvas,
+                    currentXIndex,
+                    currentYIndex,
+                    color,
+                    alpha
+                );
+            }
+
+            // update xIndex and yIndex
+            currentXIndexForHighlighting = mapIterator.getCurrentXIndex();
+            currentYIndexForHighlighting = mapIterator.getCurrentYIndex();
+        }
     }
 
     /**
-     * TODO
+     * internal class that holds information about Tile maps
+     * that is relevant to the implementation of Dijkstra's algorithm
+     * @author Ryan Voor
      */
-    //private void tintTilesToWhichOccupantCanMoveVisit() {
-    //  // TODO
-    //}
+    private class DistanceGrid {
+        // TODO finish the distance grid class
+
+        // see the giant comment at the top of the Map class for
+        // clarification on how the grid is laid out and accessed
+
+        // instance variables
+        ArrayList<ArrayList<Integer>> distances;
+        ArrayList<ArrayList<Boolean>> visited;
+
+        /**
+         * constructor for the DistanceGrid class
+         * @param width the width of the grid to be constructed
+         * @param height the height of the grid to be constructed
+         */
+        public DistanceGrid(int width, int height) {
+            this.distances = new ArrayList<ArrayList<Integer>>();
+            this.visited   = new ArrayList<ArrayList<Boolean>>();
+
+            // create 'width' number of rows each with
+            // 'height' number of entries (columns)
+            for (int i = 0; i < width; i++) {
+                this.distances.add(new ArrayList<Integer>());
+                this.visited.add(new ArrayList<Boolean>());
+
+                for (int j = 0; j < height; j++) {
+                    // Integer.MAX_VALUE is the default value for
+                    // the distances
+                    this.distances.get(i).add(Integer.MAX_VALUE);
+
+                    // false is the default value for 'visited'
+                    this.visited.get(i).add(false);
+                }
+            }
+        }
+
+        /////////////
+        // Getters //
+        /////////////
+
+        /**
+         * returns the current distance to the Tile with
+         * the parameter indices
+         * @param xIndex the X Index of the Tile with the distance
+         * that will be returned
+         * @param yIndex the Y Index of the Tile with the distance
+         * that will be returned
+         * @return int the current distance to the Tile located at
+         * the parameter indicies
+         */
+        public int getDistance(int xIndex, int yIndex) {
+            return this.distances.get(yIndex).get(xIndex);
+        }
+
+        /**
+         * returns whether the Tile at the parameter
+         * indicies has been visited
+         * @param xIndex the X Index of the Tile that may
+         * or may not have been visited
+         * @param yIndex the Y Index of the Tile that may
+         * or may not have been visited
+         * @return boolean whether the Tile at the parameter
+         * indicies has been visited
+         */
+        public boolean isVisited(int xIndex, int yIndex) {
+            return this.visited.get(yIndex).get(xIndex);
+        }
+
+        /**
+         * returns the number of columns in this grid
+         * @return int the number of columns in this grid
+         */
+        private int getNumberOfColumns() {
+            return this.distances.get(0).size();
+        }
+
+        /**
+         * returns the number of rows in this grid
+         * @return int the number of rows in this grid
+         */
+        private int getNumberOfRows() {
+            return this.distances.size();
+        }
+
+        /**
+         * returns the X Index of the smallest unvisited
+         * Tile in this grid
+         * @return int the X Index of the smallest unvisited
+         * Tile in this grid
+         */
+        public int getXIndexOfSmallestUnvisited() {
+            return getIndiciesOfSmallestUnvisited("x");
+        }
+
+        /**
+         * returns the Y Index of the smallest unvisited
+         * Tile in this grid
+         * @return int the Y Index of the smallest unvisited
+         * Tile in this grid
+         */
+        public int getYIndexOfSmallestUnvisited() {
+            return getIndiciesOfSmallestUnvisited("y");
+        }
+
+        /**
+         * returns either the X or Y index of the smallest
+         * unvisited Tile in this grid
+         * NOTE: because of logic in my implementation of
+         * dijkstra's algorithm this method should only ever
+         * be called if there is at least 1 unvisited Tile with
+         * a distance less than infinity
+         * @param index either "x" or "y" depending on which
+         * index the caller wants returned
+         */
+        private int getIndiciesOfSmallestUnvisited(String index) {
+            int xIndexOfResult = -1;
+            int yIndexOfResult = -1;
+
+            for (int i = 0; i < this.getNumberOfColumns(); i++) {
+                for (int j = 0; j < this.getNumberOfRows(); j++) {
+                    // figure out the distance of the Tile we're iterating
+                    // on as well as the tile that is the smallest distance
+                    // we've encountered so far
+                    int currentDistance = this.getDistance(i, j);
+                    int currentResultDistance = Integer.MAX_VALUE;
+                    // check if we've already encountered an unvisited
+                    // tile w/ distance less than infinity
+                    if (-1 != xIndexOfResult && -1 != yIndexOfResult) {
+                        currentResultDistance = this.getDistance(
+                            xIndexOfResult,
+                            yIndexOfResult
+                        );
+                    }
+
+                    // if the current iteration tile has a smaller distance
+                    // than the smallest we've encountered so far then
+                    // i guess we have a new smallest we've encountered so far
+                    if (currentDistance < currentResultDistance) {
+                        xIndexOfResult = i;
+                        yIndexOfResult = j;
+                    }
+                }
+            }
+
+            if (index.equals("x")) {
+                return xIndexOfResult;
+            }
+            if (index.equals("y")) {
+                return yIndexOfResult;
+            }
+            // TODO make this throw an exception at the start of the method
+            return -1;
+        }
+
+
+        /////////////
+        // Setters //
+        /////////////
+
+        /**
+         * sets the distance of the Tile with the parameter indices
+         * to the parameter distance
+         * @param xIndex the X Index of the Tile whose distance
+         * is to be set
+         * @param yIndex the Y Index of the Tile whose distance
+         * is to be set
+         * @param distance the distance to be set
+         */
+        public void setDistance(int xIndex, int yIndex, int distance) {
+            this.distances.get(yIndex).set(xIndex, distance);
+        }
+
+        /**
+         * sets the Tile at the parameter indices to the 'visited' status
+         * @param xIndex the X Index of the Tile to be set to 'visited'
+         * @param yIndex the Y Index of the Tile to be set to 'visited'
+         */
+        public void setToVisited(int xIndex, int yIndex) {
+            this.visited.get(yIndex).set(xIndex, true);
+        }
+
+        //////////////////
+        // Real Methods //
+        //////////////////
+
+        /**
+         * returns whether all the unvisited tiles have
+         * distance infinity
+         * NOTE: 'infinity' is just Integer.MAX_VALUE
+         * @return boolean whether all the unvisited tiles have
+         * distance infinity
+         */
+        public boolean allUnvisitedDistancesAreInfinity() {
+            // iterate over all the Tiles in this grid
+            // 'i' is the X Index or the Column
+            // 'j' is the Y Index or the Row
+            for (int i = 0; i < this.getNumberOfColumns(); i++) {
+                for (int j = 0; j < this.getNumberOfRows(); j++) {
+                    if (!this.isVisited(i, j)) {
+                        if (Integer.MAX_VALUE != this.getDistance(i, j)) {
+                            // if the current Tile is unvisited AND
+                            // it is not set to infinity distance then
+                            // all the unvisited tiles are not
+                            // distance infinity
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            // execution will only get outside the loop if
+            // all the unvisited Tiles have distance 'infinity'
+            return true;
+        }
+    }
 
     /**
      * draws this Map on the passed in Canvas object
@@ -286,6 +724,7 @@ public class Map implements Iterable<Tile> {
 
     /**
      * custom iterator class for this Map class
+     * @author Ryan Voor
      */
     private class MapIterator implements Iterator<Tile> {
 
