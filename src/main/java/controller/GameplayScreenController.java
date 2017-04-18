@@ -128,6 +128,14 @@ public class GameplayScreenController extends Controller {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
+                // make the framerate 60 FPS by not
+                // executing the rest of this method if we aren't
+                // to the next 1/60 of a second interval
+                // 16670000L is 1/60th of a second in nanoseconds
+                if (0 == (now % 16670000L)) {
+                    return;
+                }
+
                 // grab variables that we'll need
                 Map map          = GameplayScreenController.this.getMap();
                 Canvas mapCanvas = GameplayScreenController.this.getMapCanvas();
