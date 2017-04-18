@@ -184,13 +184,8 @@ public class Map implements Iterable<Tile> {
      */
     public void tintTilesToWhichOccupantCanMove(Canvas mapCanvas,
         int xIndex, int yIndex, Color color, double alpha) {
-        // TODO finish implementing movement range highlighting
-
         // TODO try to abstract parts of this method into helper methods
         // just so that way it will be a litte clearer what is going on
-
-        // TODO so I'm having a problem with an infinite loop i think
-        // ill need to take a look at this and fix please
 
         //// build the DistanceGrid using Dijkstra's Algorithm         ////
         //// see: https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm ////
@@ -227,7 +222,7 @@ public class Map implements Iterable<Tile> {
             // distance if the new one is smaller than their current one,
             // otherwise just leave their current tentative distance alone
             int northXIndex = currentXIndex;
-            int northYIndex = currentYIndex + 1;
+            int northYIndex = currentYIndex - 1;
             // check that we aren't at the edge of the Map and
             // that this Tile is unvisited
             if (northYIndex >= 0
@@ -304,7 +299,7 @@ public class Map implements Iterable<Tile> {
             }
 
             int southXIndex = currentXIndex;
-            int southYIndex = currentYIndex - 1;
+            int southYIndex = currentYIndex + 1;
             // check that we aren't at the edge of the Map and
             // that this Tile is unvisited
             if (southYIndex <= this.getMaxYIndex()
@@ -424,14 +419,19 @@ public class Map implements Iterable<Tile> {
 
             // if the current Tile is within the movement range
             if (currentDistance <= movementRange) {
-                // tint the current Tile
-                Map.tintTile(
-                    mapCanvas,
-                    currentXIndex,
-                    currentYIndex,
-                    color,
-                    alpha
-                );
+                // if the Tile we would highlight is not the Tile
+                // that the TileOccupant is located on
+                if (currentXIndexForHighlighting != xIndex
+                    || currentYIndexForHighlighting != yIndex) {
+                    // tint the current Tile
+                    Map.tintTile(
+                        mapCanvas,
+                        currentXIndexForHighlighting,
+                        currentYIndexForHighlighting,
+                        color,
+                        alpha
+                    );
+                }
             }
 
             // update xIndex and yIndex
@@ -446,8 +446,6 @@ public class Map implements Iterable<Tile> {
      * @author Ryan Voor
      */
     private class DistanceGrid {
-        // TODO finish the distance grid class
-
         // see the giant comment at the top of the Map class for
         // clarification on how the grid is laid out and accessed
 
@@ -536,7 +534,7 @@ public class Map implements Iterable<Tile> {
          * Tile in this grid
          */
         public int getXIndexOfSmallestUnvisited() {
-            return getIndiciesOfSmallestUnvisited("x");
+            return getIndicesOfSmallestUnvisited("x");
         }
 
         /**
@@ -546,7 +544,7 @@ public class Map implements Iterable<Tile> {
          * Tile in this grid
          */
         public int getYIndexOfSmallestUnvisited() {
-            return getIndiciesOfSmallestUnvisited("y");
+            return getIndicesOfSmallestUnvisited("y");
         }
 
         /**
@@ -559,32 +557,36 @@ public class Map implements Iterable<Tile> {
          * @param index either "x" or "y" depending on which
          * index the caller wants returned
          */
-        private int getIndiciesOfSmallestUnvisited(String index) {
+        private int getIndicesOfSmallestUnvisited(String index) {
             int xIndexOfResult = -1;
             int yIndexOfResult = -1;
 
             for (int i = 0; i < this.getNumberOfColumns(); i++) {
                 for (int j = 0; j < this.getNumberOfRows(); j++) {
-                    // figure out the distance of the Tile we're iterating
-                    // on as well as the tile that is the smallest distance
-                    // we've encountered so far
-                    int currentDistance = this.getDistance(i, j);
-                    int currentResultDistance = Integer.MAX_VALUE;
-                    // check if we've already encountered an unvisited
-                    // tile w/ distance less than infinity
-                    if (-1 != xIndexOfResult && -1 != yIndexOfResult) {
-                        currentResultDistance = this.getDistance(
-                            xIndexOfResult,
-                            yIndexOfResult
-                        );
-                    }
+                    // only bother checking all the other stuff
+                    // if this is an Unvisited Tile
+                    if (!this.isVisited(i, j)) {
+                        // figure out the distance of the Tile we're iterating
+                        // on as well as the tile that is the smallest distance
+                        // we've encountered so far
+                        int currentDistance = this.getDistance(i, j);
+                        int currentResultDistance = Integer.MAX_VALUE;
+                        // check if we've already encountered an unvisited
+                        // tile w/ distance less than infinity
+                        if (-1 != xIndexOfResult && -1 != yIndexOfResult) {
+                            currentResultDistance = this.getDistance(
+                                xIndexOfResult,
+                                yIndexOfResult
+                            );
+                        }
 
-                    // if the current iteration tile has a smaller distance
-                    // than the smallest we've encountered so far then
-                    // i guess we have a new smallest we've encountered so far
-                    if (currentDistance < currentResultDistance) {
-                        xIndexOfResult = i;
-                        yIndexOfResult = j;
+                        // if the current iteration tile has a smaller distance
+                        // than the smallest we've encountered so far then
+                        // i guess we have a new smallest we've encountered so far
+                        if (currentDistance < currentResultDistance) {
+                            xIndexOfResult = i;
+                            yIndexOfResult = j;
+                        }
                     }
                 }
             }
