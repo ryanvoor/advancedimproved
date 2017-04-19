@@ -227,38 +227,14 @@ public class Map implements Iterable<Tile> {
             // that this Tile is unvisited
             if (northYIndex >= 0
                 && !distanceGrid.isVisited(northXIndex, northYIndex)) {
-                // TODO abstract the code in this if statement into a helper
-                // method so i dont have it copied and pasted 4 times
-
-                // grab the Tile to the north of the current Tile so we
-                // can grab the Terrain of that Tile so we can grab the
-                // movement cost of that Tile
-                Tile northTile
-                    = this.getTileFromIndices(northXIndex, northYIndex);
-                Terrain northTerrain  = northTile.getTerrain();
-                int northMovementCost = northTerrain.getMovementCost(occupantInQuestion);
-
-                // grab current north tile distance and current tile distance
-                int currentNorthTileDistance
-                    = distanceGrid.getDistance(northXIndex, northYIndex);
-                int currentTileDistance
-                    = distanceGrid.getDistance(currentXIndex, currentYIndex);
-
-                // use those to calculate the distance that might replace the
-                // north tile distance
-                int potentialNorthTileDistance
-                    = currentTileDistance + northMovementCost;
-
-                // if this new distance to the north tile is shorter than
-                // the existing distance to the north tile
-                if (potentialNorthTileDistance < currentNorthTileDistance) {
-                    // replace the distance
-                    distanceGrid.setDistance(
-                        northXIndex,
-                        northYIndex,
-                        potentialNorthTileDistance
-                    );
-                }
+                this.updateAdjacentTile(
+                    currentXIndex,
+                    currentYIndex,
+                    northXIndex,
+                    northYIndex,
+                    distanceGrid,
+                    occupantInQuestion
+                );
             }
 
             int eastXIndex = currentXIndex + 1;
@@ -267,35 +243,14 @@ public class Map implements Iterable<Tile> {
             // that this Tile is unvisited
             if (eastXIndex <= this.getMaxXIndex()
                 && !distanceGrid.isVisited(eastXIndex, eastYIndex)) {
-                // grab the Tile to the east of the current Tile so we
-                // can grab the Terrain of that Tile so we can grab the
-                // movement cost of that Tile
-                Tile eastTile
-                    = this.getTileFromIndices(eastXIndex, eastYIndex);
-                Terrain eastTerrain  = eastTile.getTerrain();
-                int eastMovementCost = eastTerrain.getMovementCost(occupantInQuestion);
-
-                // grab current east tile distance and current tile distance
-                int currentEastTileDistance
-                    = distanceGrid.getDistance(eastXIndex, eastYIndex);
-                int currentTileDistance
-                    = distanceGrid.getDistance(currentXIndex, currentYIndex);
-
-                // use those to calculate the distance that might replace the
-                // east tile distance
-                int potentialEastTileDistance
-                    = currentTileDistance + eastMovementCost;
-
-                // if this new distance to the east tile is shorter than
-                // the existing distance to the east tile
-                if (potentialEastTileDistance < currentEastTileDistance) {
-                    // replace the distance
-                    distanceGrid.setDistance(
-                        eastXIndex,
-                        eastYIndex,
-                        potentialEastTileDistance
-                    );
-                }
+                this.updateAdjacentTile(
+                    currentXIndex,
+                    currentYIndex,
+                    eastXIndex,
+                    eastYIndex,
+                    distanceGrid,
+                    occupantInQuestion
+                );
             }
 
             int southXIndex = currentXIndex;
@@ -304,35 +259,14 @@ public class Map implements Iterable<Tile> {
             // that this Tile is unvisited
             if (southYIndex <= this.getMaxYIndex()
                 && !distanceGrid.isVisited(southXIndex, southYIndex)) {
-                // grab the Tile to the south of the current Tile so we
-                // can grab the Terrain of that Tile so we can grab the
-                // movement cost of that Tile
-                Tile southTile
-                    = this.getTileFromIndices(southXIndex, southYIndex);
-                Terrain southTerrain  = southTile.getTerrain();
-                int southMovementCost = southTerrain.getMovementCost(occupantInQuestion);
-
-                // grab current south tile distance and current tile distance
-                int currentSouthTileDistance
-                    = distanceGrid.getDistance(southXIndex, southYIndex);
-                int currentTileDistance
-                    = distanceGrid.getDistance(currentXIndex, currentYIndex);
-
-                // use those to calculate the distance that might replace the
-                // south tile distance
-                int potentialSouthTileDistance
-                    = currentTileDistance + southMovementCost;
-
-                // if this new distance to the south tile is shorter than
-                // the existing distance to the south tile
-                if (potentialSouthTileDistance < currentSouthTileDistance) {
-                    // replace the distance
-                    distanceGrid.setDistance(
-                        southXIndex,
-                        southYIndex,
-                        potentialSouthTileDistance
-                    );
-                }
+                this.updateAdjacentTile(
+                    currentXIndex,
+                    currentYIndex,
+                    southXIndex,
+                    southYIndex,
+                    distanceGrid,
+                    occupantInQuestion
+                );
             }
 
             int westXIndex = currentXIndex - 1;
@@ -341,35 +275,14 @@ public class Map implements Iterable<Tile> {
             // that this Tile is unvisited
             if (westXIndex >= 0
                 && !distanceGrid.isVisited(westXIndex, westYIndex)) {
-                // grab the Tile to the west of the current Tile so we
-                // can grab the Terrain of that Tile so we can grab the
-                // movement cost of that Tile
-                Tile westTile
-                    = this.getTileFromIndices(westXIndex, westYIndex);
-                Terrain westTerrain  = westTile.getTerrain();
-                int westMovementCost = westTerrain.getMovementCost(occupantInQuestion);
-
-                // grab current west tile distance and current tile distance
-                int currentWestTileDistance
-                    = distanceGrid.getDistance(westXIndex, westYIndex);
-                int currentTileDistance
-                    = distanceGrid.getDistance(currentXIndex, currentYIndex);
-
-                // use those to calculate the distance that might replace the
-                // west tile distance
-                int potentialWestTileDistance
-                    = currentTileDistance + westMovementCost;
-
-                // if this new distance to the west tile is shorter than
-                // the existing distance to the west tile
-                if (potentialWestTileDistance < currentWestTileDistance) {
-                    // replace the distance
-                    distanceGrid.setDistance(
-                        westXIndex,
-                        westYIndex,
-                        potentialWestTileDistance
-                    );
-                }
+                this.updateAdjacentTile(
+                    currentXIndex,
+                    currentYIndex,
+                    westXIndex,
+                    westYIndex,
+                    distanceGrid,
+                    occupantInQuestion
+                );
             }
 
 
@@ -439,6 +352,57 @@ public class Map implements Iterable<Tile> {
             currentYIndexForHighlighting = mapIterator.getCurrentYIndex();
         }
     }
+
+
+    /**
+     * updates the adjacent tile at the parameter indices during the execution
+     * of dijkstra's algorithm
+     * @param currentXIndex the X Index of the Tile we are currently visiting
+     * @param currentYIndex the Y Index of the Tile we are currently visiting
+     * @param adjacentXIndex the X Index of the Tile we are updating that
+     * is adjacent to the Tile we are currently visiting
+     * @param adjacentYIndex the Y Index of the Tile we are updating that
+     * is adjacent to the Tile we are currently visiting
+     * @param distanceGrid the DistanceGrid that holds the relevant
+     * information for these Tiles
+     * @param occupantInQuestion the TileOccupant that will eventually
+     * potentially be moving onto one of these Tiles
+     */
+    private void updateAdjacentTile(int currentXIndex,
+        int currentYIndex, int adjacentXIndex, int adjacentYIndex,
+            DistanceGrid distanceGrid, TileOccupant occupantInQuestion) {
+        // grab the Tile to whatever side of the current Tile so we
+        // can grab the Terrain of that Tile so we can grab the
+        // movement cost of that Tile
+        Tile adjacentTile
+            = this.getTileFromIndices(adjacentXIndex, adjacentYIndex);
+        Terrain adjacentTerrain = adjacentTile.getTerrain();
+        int adjacentMovementCost
+            = adjacentTerrain.getMovementCost(occupantInQuestion);
+
+        // grab current adjacent tile distance and current tile distance
+        int currentAdjacentTileDistance
+            = distanceGrid.getDistance(adjacentXIndex, adjacentYIndex);
+        int currentTileDistance
+            = distanceGrid.getDistance(currentXIndex, currentYIndex);
+
+        // use those to calculate the distance that might replace the
+        // adjacent tile distance
+        int potentialAdjacentTileDistance
+            = currentTileDistance + adjacentMovementCost;
+
+        // if this new distance to the adjacent tile is shorter than
+        // the existing distance to the adjacent tile
+        if (potentialAdjacentTileDistance < currentAdjacentTileDistance) {
+            // replace the distance
+            distanceGrid.setDistance(
+                adjacentXIndex,
+                adjacentYIndex,
+                potentialAdjacentTileDistance
+            );
+        }
+    }
+
 
     /**
      * internal class that holds information about Tile maps
