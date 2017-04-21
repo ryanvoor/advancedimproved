@@ -18,10 +18,6 @@ import model.drawable.Drawable;
  */
 public abstract class TileOccupant implements Drawable {
 
-    // TODO maybe rework this and the unit class such that buildings
-    // are their own thing unrelated to TileOccupants. That way
-    // Tiles can hold a Terrain, 2 units, and a building
-
     // instance variables
     private ArrayList<String> fileImageUrls;
     private int movementRange;
