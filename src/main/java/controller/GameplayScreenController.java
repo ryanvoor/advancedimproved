@@ -31,8 +31,8 @@ public class GameplayScreenController extends Controller {
     private int selectedColumn;
     private int selectedRow;
     private boolean aTileIsSelected;
-    private int hoveredColumn;
-    private int hoveredRow;
+    private int hoveredColumn; // the default hovered Tile should be 0,0
+    private int hoveredRow;    // the default hovered Tile should be 0,0
 
     // FXML instance variables
     // these get set automatically by javafx and the fxml
