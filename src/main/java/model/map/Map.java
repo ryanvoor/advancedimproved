@@ -184,12 +184,6 @@ public class Map implements Iterable<Tile> {
      */
     public void tintTilesToWhichOccupantCanMove(Canvas mapCanvas,
         int xIndex, int yIndex, Color color, double alpha) {
-        // TODO try to abstract parts of this method into helper methods
-        // just so that way it will be a litte clearer what is going on
-
-        //// build the DistanceGrid using Dijkstra's Algorithm         ////
-        //// see: https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm ////
-
         // grab the Tile that the occupant we care about is sitting on
         // so we can grab the TileOCcupant from that Tile
         // so we can grab the movement range from that TileOccupant
@@ -202,6 +196,110 @@ public class Map implements Iterable<Tile> {
             this.getNumberOfColumns(),
             this.getNumberOfRows()
         );
+
+        //// build the DistanceGrid ////
+        buildDistanceGrid(
+            distanceGrid,
+            xIndex,
+            yIndex,
+            occupantInQuestion
+        );
+
+        //// highlight all tiles within the movement range ////
+        highlightTileWithinMovementRange(
+            movementRange,
+            xIndex,
+            yIndex,
+            distanceGrid,
+            mapCanvas,
+            color,
+            alpha
+        );
+    }
+
+
+    /**
+     * highlights all the Tiles on this Map that the TileOccupant located
+     * at the Tile with the parameter indices can move to
+     * @param movementRange the movement range of the TileOccupant that
+     * may be moving off the Tile at the parameter idices
+     * @param xIndex the X Index of the starting Tile
+     * @param yIndex the Y Index of the starting Tile
+     * @param distanceGrid the DistanceGrid containing the distances to
+     * all the Tiles on the Map
+     * @param mapCanvas the Canvas upon which the Tiles are drawn that we
+     * we need to highlight
+     * @param color the color to highlight the Tiles
+     * @param alpha the Alpha value used to determine transparency,
+     * between 0.0 and 1.0 and lower is more transparent
+     */
+    private void highlightTileWithinMovementRange(int movementRange,
+        int xIndex, int yIndex, DistanceGrid distanceGrid, Canvas mapCanvas,
+            Color color, double alpha) {
+        // grab the iterator object
+        // this cast is necessary because the iterator
+        // method returns an Iterator and I need to use
+        // some MapIterator specific methods
+        // this cast is safe because I know that this is
+        // going to return a MapIterator
+        MapIterator mapIterator = (MapIterator) this.iterator();
+
+        // get the xIndex
+        int currentXIndexForHighlighting = mapIterator.getCurrentXIndex();
+
+        // get the yIndex
+        int currentYIndexForHighlighting = mapIterator.getCurrentYIndex();
+
+        // iterate through all the tiles
+        while (mapIterator.hasNext()) {
+            // move the Iterator to the next Tile
+            // don't assign to anything since we don't actually
+            // need the Tile object for this loop
+            mapIterator.next();
+
+            // grab the current Distance
+            int currentDistance = distanceGrid.getDistance(
+                currentXIndexForHighlighting,
+                currentYIndexForHighlighting
+            );
+
+            // if the current Tile is within the movement range
+            if (currentDistance <= movementRange) {
+                // if the Tile we would highlight is not the Tile
+                // that the TileOccupant is located on
+                if (currentXIndexForHighlighting != xIndex
+                    || currentYIndexForHighlighting != yIndex) {
+                    // tint the current Tile
+                    Map.tintTile(
+                        mapCanvas,
+                        currentXIndexForHighlighting,
+                        currentYIndexForHighlighting,
+                        color,
+                        alpha
+                    );
+                }
+            }
+
+            // update xIndex and yIndex
+            currentXIndexForHighlighting = mapIterator.getCurrentXIndex();
+            currentYIndexForHighlighting = mapIterator.getCurrentYIndex();
+        }
+    }
+
+
+    /**
+     * constructs the DistanceGrid for highlighting a TileOccupant's
+     * movement range using Dijkstra's Algorithm
+     * @param distanceGrid the DistanceGrid that we are filling in with
+     * distance values
+     * @param xIndex the X Index of the starting Tile
+     * @param yIndex the Y Index of the starting Tile
+     * @param occupantInQuestion the TileOccupant that may or may not
+     * be moving from the Tile with the parameter indices
+     */
+    private void buildDistanceGrid(DistanceGrid distanceGrid, int xIndex,
+        int yIndex, TileOccupant occupantInQuestion) {
+        //// see: https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm ////
 
         // assign tentative distance values
         // initial Tile: 0
@@ -299,58 +397,6 @@ public class Map implements Iterable<Tile> {
         // when we break out of the loop the DistanceGrid should
         // be completely filled in with the shortest distances to
         // each Tile
-
-
-        //// highlight all tiles within the movement range ////
-
-        // grab the iterator object
-        // this cast is necessary because the iterator
-        // method returns an Iterator and I need to use
-        // some MapIterator specific methods
-        // this cast is safe because I know that this is
-        // going to return a MapIterator
-        MapIterator mapIterator = (MapIterator) this.iterator();
-
-        // get the xIndex
-        int currentXIndexForHighlighting = mapIterator.getCurrentXIndex();
-
-        // get the yIndex
-        int currentYIndexForHighlighting = mapIterator.getCurrentYIndex();
-
-        // iterate through all the tiles
-        while (mapIterator.hasNext()) {
-            // move the Iterator to the next Tile
-            // don't assign to anything since we don't actually
-            // need the Tile object for this loop
-            mapIterator.next();
-
-            // grab the current Distance
-            int currentDistance = distanceGrid.getDistance(
-                currentXIndexForHighlighting,
-                currentYIndexForHighlighting
-            );
-
-            // if the current Tile is within the movement range
-            if (currentDistance <= movementRange) {
-                // if the Tile we would highlight is not the Tile
-                // that the TileOccupant is located on
-                if (currentXIndexForHighlighting != xIndex
-                    || currentYIndexForHighlighting != yIndex) {
-                    // tint the current Tile
-                    Map.tintTile(
-                        mapCanvas,
-                        currentXIndexForHighlighting,
-                        currentYIndexForHighlighting,
-                        color,
-                        alpha
-                    );
-                }
-            }
-
-            // update xIndex and yIndex
-            currentXIndexForHighlighting = mapIterator.getCurrentXIndex();
-            currentYIndexForHighlighting = mapIterator.getCurrentYIndex();
-        }
     }
 
 
