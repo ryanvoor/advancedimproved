@@ -21,6 +21,11 @@ import model.map.Map;
  */
 public class GameplayScreenController extends Controller {
 
+    // TODO there's a problem with the canvas being bigger than the map and
+    // that causing arrayindexoutofbounds exceptions. However, it doesnt really
+    // affect the user experience directly so i guess fixing it isnt super high
+    // priority
+
     // regular instance variables
     private Map map;
     private int selectedColumn;
