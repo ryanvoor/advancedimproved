@@ -21,15 +21,13 @@ import model.map.Map;
  */
 public class GameplayScreenController extends Controller {
 
-    // TODO should add functionality for hovering over a Tile
-    // this will help with UI as well as the ability to implement
-    // pure keyboard controls
-
     // regular instance variables
     private Map map;
     private int selectedColumn;
     private int selectedRow;
     private boolean aTileIsSelected;
+    private int hoveredColumn;
+    private int hoveredRow;
 
     // FXML instance variables
     // these get set automatically by javafx and the fxml
@@ -67,7 +65,7 @@ public class GameplayScreenController extends Controller {
         // are already implicitly)) to help keep this controller from
         // becoming gigantic
 
-        // set up mouse event handler
+        // set up mouse click event handler
         mapCanvas.addEventHandler(MouseEvent.MOUSE_CLICKED,
             new EventHandler<MouseEvent>() {
                 // execute this method when user clicks on the canvas
@@ -86,12 +84,36 @@ public class GameplayScreenController extends Controller {
                 }
             });
 
+        // set up mouse move event handler
+        mapCanvas.addEventHandler(MouseEvent.MOUSE_MOVED,
+            new EventHandler<MouseEvent>() {
+                // execute this method when user moves the mouse on the canvas
+                @Override
+                public void handle(MouseEvent e) {
+                    // if there is no selected Tile
+                    // this is safe because the only Tile that should
+                    // ever get selected is the Tile that was just being
+                    // hovered
+                    if (!GameplayScreenController.this.getATileIsSelected()) {
+                        // hover the tile that get moved onto
+                        GameplayScreenController.this.hoverTile(
+                            // cast this because I don't care about
+                            // partial pixel values
+                            Facade.getColumnFromCoordinate((int) e.getX()),
+                            Facade.getRowFromCoordinate((int) e.getY())
+                        );
+                    }
+                }
+            });
+
 
         // set up key event handlers
         // key pressed handler
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
+                // TODO implement keyboard controls for hovering and selecting
+
                 // check all the keys that could get pressed that I care about
                 switch (event.getCode()) {
                     case ENTER:
@@ -173,6 +195,14 @@ public class GameplayScreenController extends Controller {
                             0.3
                         );
                     }
+                } else { // if there is no currently selected Tile
+                    Facade.tintTile(
+                        mapCanvas,
+                        GameplayScreenController.this.getHoveredColumn(),
+                        GameplayScreenController.this.getHoveredRow(),
+                        Color.GREEN,
+                        0.3
+                    );
                 }
             }
         };
@@ -250,6 +280,30 @@ public class GameplayScreenController extends Controller {
         return this.aTileIsSelected;
     }
 
+    /**
+     * getter for the column on the map that the
+     * user currently has hovered, this is slightly
+     * different from the selected Tile because
+     * there is always a hovered Tile
+     * @return int the column on the map that the
+     * user currently has hovered
+     */
+    private int getHoveredColumn() {
+        return this.hoveredColumn;
+    }
+
+    /**
+     * getter for the row on the map that the
+     * user currently has hovered, this is slightly
+     * different from the selected Tile because
+     * there is always a hovered Tile
+     * @return int the row on the map that the
+     * user currently has hovered
+     */
+    private int getHoveredRow() {
+        return this.hoveredRow;
+    }
+
 
     /////////////
     // Setters //
@@ -303,6 +357,26 @@ public class GameplayScreenController extends Controller {
         this.aTileIsSelected = aTileIsSelected;
     }
 
+    /**
+     * setter for the column that is currently hovered
+     * by the user
+     * @param int the column that the is to become
+     * hovered
+     */
+    public void setHoveredColumn(int hoveredColumn) {
+        this.hoveredColumn = hoveredColumn;
+    }
+
+    /**
+     * setter for the row that is currently hovered
+     * by the user
+     * @param int the row that the is to become
+     * hovered
+     */
+    public void setHoveredRow(int hoveredRow) {
+        this.hoveredRow = hoveredRow;
+    }
+
 
     //////////////////
     // Real Methods //
@@ -349,6 +423,20 @@ public class GameplayScreenController extends Controller {
             this.getSelectedColumn(),
             this.getSelectedRow()
         );
+    }
+
+    /**
+     * hovers the Tile that is located at the parameter
+     * column and row
+     * @param hoveredColumn the column of the Tile that the
+     * user is hovering
+     * @param hoveredRow the row of the Tile that the
+     * user is hovering
+     */
+    private void hoverTile(int hoveredColumn, int hoveredRow) {
+        // set which Tile the user has selected
+        this.setHoveredColumn(hoveredColumn);
+        this.setHoveredRow(hoveredRow);
     }
 
     /**
