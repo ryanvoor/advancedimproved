@@ -1,4 +1,4 @@
-package model.drawable.tileOccupant;
+package model.drawable.building;
 
 // java standard library imports
 import java.util.ArrayList;
@@ -10,31 +10,27 @@ import javafx.scene.image.Image;
 import model.drawable.Drawable;
 
 /**
- * abstract class that represents something on the Map
- * that occupies a Tile, these can be units in an
- * army, cities or other buildings and anything else we
- * come up with to put onto Tiles
+ * abstract class that represents a building on the Map
+ * that is located on a Tile, these can produce units or
+ * heal units or provide vision etc.
  * @author Ryan Voor
  */
-public abstract class TileOccupant implements Drawable {
+public abstract class Building implements Drawable {
 
-    // TODO maybe rework this and the unit class such that buildings
-    // are their own thing unrelated to TileOccupants. That way
-    // Tiles can hold a Terrain, 2 units, and a building
+    // TODO I need to abstract of lot of this class and
+    // the TileOccupant class into the Drawable Interface
 
     // instance variables
     private ArrayList<String> fileImageUrls;
-    private int movementRange;
 
     /**
-     * constructor for the TileOccupant class
-     * @param fileImageUrls the urls of the files of
-     * the Images that should be shown on the Tile
-     * that this TileOccupant occupies
+     * constructor for the Building class
+     * @param fileImageUrl the url of the file of
+     * the Image that should be shown on the Tile
+     * that this Buildling is located on
      */
-    public TileOccupant(ArrayList<String> fileImageUrls, int movementRange) {
+    public Building(ArrayList<String> fileImageUrls) {
         this.fileImageUrls = fileImageUrls;
-        this.movementRange = movementRange;
     }
 
     /////////////
@@ -42,11 +38,12 @@ public abstract class TileOccupant implements Drawable {
     /////////////
 
     /**
-     * getter for the urls of the Files that should
-     * be shown on the Tile that this TileOccupant occupies
+     * getter for the urls of the Files that
+     * should be shown on the Tile that this
+     * Building is located on
      * @return ArrayList<String> the urls of the files of
-     * the Images that should be shown on the
-     * Tile that this TileOccupant occupies
+     * the Images that should be shown on the Tile that this
+     * Building is located on
      */
     public ArrayList<String> getFileImageUrls() {
         return this.fileImageUrls;
@@ -59,9 +56,9 @@ public abstract class TileOccupant implements Drawable {
 
     /**
      * getter for the Images that should be shown
-     * on the Tile that this TileOccupant occupies
+     * on the Tile that this Building occupies
      * @return ArrayList<Image> the Image that should be shown
-     * on the Tile that this TileOccupant occupies
+     * on the Tile that this Building occupies
      */
     public ArrayList<Image> getImages() {
         // build the ArrayList of images from the
@@ -76,9 +73,9 @@ public abstract class TileOccupant implements Drawable {
 
     /**
      * getter for the number of images in the animation
-     * for this TileOccupant
+     * for this Building
      * @return int the number of images in the animation
-     * for this TileOccupant
+     * for this Building
      */
     public int getNumberOfImages() {
         ArrayList<String> fileImageUrls = this.getFileImageUrls();
@@ -115,15 +112,5 @@ public abstract class TileOccupant implements Drawable {
 
         // return it
         return images.get(indexOfCurrentImage);
-    }
-
-    /**
-     * getter for the movementRange of this TileOccupant,
-     * this movementRange is before Terrain calculations
-     * are taken into account
-     * @return int the movementRange of this Unit
-     */
-    public int getMovementRange() {
-        return this.movementRange;
     }
 }

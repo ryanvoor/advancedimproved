@@ -16,6 +16,9 @@ import javafx.scene.paint.Paint;
 
 // this project imports
 import exception.MapFileReadException;
+import model.drawable.building.Building;
+import model.drawable.building.CommandCenter;
+import model.drawable.building.MedicalCenter;
 import model.drawable.terrain.Terrain;
 import model.drawable.terrain.Forest;
 import model.drawable.terrain.Mountain;
@@ -979,7 +982,7 @@ public class Map implements Iterable<Tile> {
         for (ArrayList<String> row: fileStrings) {
             for (String chunk: row) {
                 // make sure each chunk has at least 2 characters
-                if (chunk.length() < 2) {
+                if (chunk.length() < 3) {
                     throw new MapFileReadException(
                         "csv entry did not have enough letters for a tile");
                 }
@@ -987,15 +990,19 @@ public class Map implements Iterable<Tile> {
                 // pull out the terrain and occupant characters
                 String terrainString  = chunk.substring(0, 1);
                 String occupantString = chunk.substring(1, 2);
+                String buildingString = chunk.substring(2, 3);
 
                 // get the actual java objects that relate to the strings
                 Terrain terrain
                     = getTerrainFromFileString(terrainString);
                 TileOccupant occupant
                     = getTileOccupantFromFileString(occupantString);
+                Building building
+                    = getBuildingFromFileString(buildingString);
 
                 // fill in variable tiles with Tile objects
-                tiles.get(y).add(x, new Tile(terrain, occupant));
+                Tile newTile = new Tile(terrain, occupant, building);
+                tiles.get(y).add(x, newTile);
 
                 x++;
             }
@@ -1086,6 +1093,37 @@ public class Map implements Iterable<Tile> {
             break;
         case "s":
             toBeReturned = new Sniper();
+            break;
+        default:
+            throw new MapFileReadException(
+                "incorrect occupant letter in map file");
+        }
+
+        return toBeReturned;
+    }
+
+    /**
+     * helper method that converts a building-string from a map file into
+     * an actual Building object
+     * @param fileString the string from the map file
+     * @return Building the corresponding Building
+     */
+    private static Building getBuildingFromFileString(String fileString)
+        throws MapFileReadException {
+        Building toBeReturned = null;
+
+        // use this switch tree to go through all the
+        // possible Tile Occupants and convert those strings into
+        // actual Tile Occupant objects
+        switch (fileString) {
+        case "n":
+            toBeReturned = null;
+            break;
+        case "c":
+            toBeReturned = new CommandCenter();
+            break;
+        case "m":
+            toBeReturned = new MedicalCenter();
             break;
         default:
             throw new MapFileReadException(

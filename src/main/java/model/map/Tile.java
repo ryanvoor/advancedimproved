@@ -4,6 +4,7 @@ package model.map;
 import javafx.scene.canvas.Canvas;
 
 // this project imports
+import model.drawable.building.Building;
 import model.drawable.terrain.Terrain;
 import model.drawable.tileOccupant.TileOccupant;
 
@@ -11,6 +12,8 @@ import model.drawable.tileOccupant.TileOccupant;
 // multiple occupants so the gameplay dream can be implemented
 // TODO also alter this class to hold buildings since those will
 // be separate from TileOccupants soon enough (if not already)
+// TODO I should consider only allowing buildings to be built on certain
+// Tiles as a balance/map design tool
 
 /**
  * Class that represents a Tile on a Map
@@ -27,25 +30,50 @@ public class Tile {
     // instance variables
     private TileOccupant occupant;
     private Terrain terrain;
+    private Building building;
 
     /**
      * constructor for the Tile class, takes in
-     * both a Terrain and a TileOccupant
+     * a Terrain, TileOccupant, and building
      * @param terrain the terrain of this Tile
      * @param occupant the occupant of this Tile
+     * @param building the building of this Tile
      */
-    public Tile(Terrain terrain, TileOccupant occupant) {
+    public Tile(Terrain terrain, TileOccupant occupant, Building building) {
         this.terrain  = terrain;
         this.occupant = occupant;
+        this.building = building;
     }
 
     /**
      * constructor for the Tile class, just takes in
-     * a Terrain, this Tile will have no occupant
+     * a Terrain and a TileOccupant, this
+     * Tile will have no building
+     * @param terrain the terrain of this Tile
+     * @param occupant the occupant of this Tile
+     */
+    public Tile(Terrain terrain, TileOccupant occupant) {
+        this(terrain, occupant, null);
+    }
+
+    /**
+     * constructor for the Tile class, just takes in
+     * a Terrain and a Building, this
+     * Tile will have no occupant
+     * @param terrain the terrain of this Tile
+     * @param building the building of this Tile
+     */
+    public Tile(Terrain terrain, Building building) {
+        this(terrain, null, building);
+    }
+
+    /**
+     * constructor for the Tile class, just takes in
+     * a Terrain, this Tile will have no occupant or building
      * @param terrain the terrain of this Tile
      */
     public Tile(Terrain terrain) {
-        this(terrain, null);
+        this(terrain, null, null);
     }
 
     /////////////
@@ -79,6 +107,14 @@ public class Tile {
     }
 
     /**
+     * the getter for the building of this Tile
+     * @return Building the building of this Tile
+     */
+    public Building getBuilding() {
+        return this.building;
+    }
+
+    /**
      * the getter for the Terrain of this Tile
      * @return Terrain the Terrain of this Tile
      */
@@ -94,6 +130,14 @@ public class Tile {
         return null != this.getOccupant();
     }
 
+    /**
+     * returns whether this Tile has a building
+     * @return boolean whether this Tile has a building
+     */
+    public boolean hasBuilding() {
+        return null != this.getBuilding();
+    }
+
     /////////////
     // Setters //
     /////////////
@@ -104,6 +148,14 @@ public class Tile {
      */
     public void setOccupant(TileOccupant occupant) {
         this.occupant = occupant;
+    }
+
+    /**
+     * setter for the building of this Tile
+     * @param Building the building to be placed on this Tile
+     */
+    public void setBuilding(Building building) {
+        this.building = building;
     }
 
     /**
@@ -119,8 +171,8 @@ public class Tile {
     //////////////////
 
     /**
-     * draws the terrain and occupant of this Tile onto the
-     * canvas at the specified positions
+     * draws the terrain, building, and occupant of this Tile onto the
+     * canvas at the specified position
      * @param canvas the canvas upon which this Tile will be drawn
      * @param xPosition the X position in pixels of the top-left corner
      * of the Tile where it will be drawn
@@ -131,6 +183,13 @@ public class Tile {
         // grab the terrain and draw it on the canvas
         Terrain terrain = this.getTerrain();
         terrain.draw(canvas, xPosition, yPosition, time);
+
+        // if this Tile has a building, then grab
+        // it and draw it on the canvas
+        if (this.hasBuilding()) {
+            Building building = this.getBuilding();
+            building.draw(canvas, xPosition, yPosition, time);
+        }
 
         // if this Tile has an occupant, then grab
         // it and draw it on the canvas
