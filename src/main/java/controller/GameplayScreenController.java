@@ -25,6 +25,8 @@ public class GameplayScreenController extends Controller {
     // that causing arrayindexoutofbounds exceptions. However, it doesnt really
     // affect the user experience directly so i guess fixing it isnt super high
     // priority
+    // TODO should make the mouse also hover over Tiles during selection like
+    // the keyboard controls do
 
     // regular instance variables
     private Map map;
