@@ -117,10 +117,20 @@ public class GameplayScreenController extends Controller {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                // TODO implement keyboard controls for hovering and selecting
-
                 // check all the keys that could get pressed that I care about
                 switch (event.getCode()) {
+                    case W:
+                        GameplayScreenController.this.wKeyPressed();
+                        break;
+                    case A:
+                        GameplayScreenController.this.aKeyPressed();
+                        break;
+                    case S:
+                        GameplayScreenController.this.sKeyPressed();
+                        break;
+                    case D:
+                        GameplayScreenController.this.dKeyPressed();
+                        break;
                     case ENTER:
                         GameplayScreenController.this.enterKeyPressed();
                         break;
@@ -168,6 +178,18 @@ public class GameplayScreenController extends Controller {
                 Canvas mapCanvas = GameplayScreenController.this.getMapCanvas();
                 GraphicsContext graphicsContext
                     = mapCanvas.getGraphicsContext2D();
+                boolean aTileIsSelected
+                    = GameplayScreenController.this.getATileIsSelected();
+                boolean selectedTileIsOccupied
+                    = GameplayScreenController.this.selectedTileIsOccupied();
+                int selectedColumn
+                    = GameplayScreenController.this.getSelectedColumn();
+                int selectedRow
+                    = GameplayScreenController.this.getSelectedRow();
+                int hoveredColumn
+                    = GameplayScreenController.this.getHoveredColumn();
+                int hoveredRow
+                    = GameplayScreenController.this.getHoveredRow();
 
                 // clear the map
                 GameplayScreenController.this.clearMapCanvas();
@@ -176,35 +198,44 @@ public class GameplayScreenController extends Controller {
                 Facade.drawMap(map, mapCanvas, now);
 
                 // if there is a currently selected Tile
-                if (GameplayScreenController.this.getATileIsSelected()) {
+                if (aTileIsSelected) {
                     // highlight the selected Tile
                     Facade.tintTile(
                         mapCanvas,
-                        GameplayScreenController.this.getSelectedColumn(),
-                        GameplayScreenController.this.getSelectedRow(),
+                        selectedColumn,
+                        selectedRow,
                         Color.BLUE,
                         0.3
                     );
 
                     // if the selected Tile is occupied then highlight all
                     // the Tiles that the TileOccupant can move to
-                    if (GameplayScreenController.this.selectedTileIsOccupied()) {
+                    if (selectedTileIsOccupied) {
                         // if the tile that is selected is occupied
                         // then highlight where the tile occupant can move
                         Facade.tintTilesToWhichOccupantCanMove(
                             map,
                             mapCanvas,
-                            GameplayScreenController.this.getSelectedColumn(),
-                            GameplayScreenController.this.getSelectedRow(),
+                            selectedColumn,
+                            selectedRow,
                             Color.RED,
                             0.3
                         );
                     }
-                } else { // if there is no currently selected Tile
+
+                }
+
+                // if there is a currently selected Tile and if
+                // the currently Selected Tile is the same one that
+                // is being hovered then don't draw the hovered Tile,
+                // if there is no currently selected Tile then draw
+                // the hovered Tile
+                if (aTileIsSelected && (selectedColumn != hoveredColumn
+                    || selectedRow != hoveredRow) || !aTileIsSelected) {
                     Facade.tintTile(
                         mapCanvas,
-                        GameplayScreenController.this.getHoveredColumn(),
-                        GameplayScreenController.this.getHoveredRow(),
+                        hoveredColumn,
+                        hoveredRow,
                         Color.GREEN,
                         0.3
                     );
@@ -244,34 +275,26 @@ public class GameplayScreenController extends Controller {
     /**
      * getter for the column on the map that the
      * user currently has selected
+     * NOTE: never use this without first checking
+     * the boolean that says whether this column is valid
+     * data that can be used or not
      * @return int the column on the map that the
      * user currently has selected
      */
     private int getSelectedColumn() {
-        if (!this.getATileIsSelected()) {
-            // TODO change these to an exception that makes more sense
-            // my custom exception class should probably be a subclass
-            // of runtime exception
-            throw new RuntimeException("tried to get selected column "
-                + "when a tile was not selected");
-        }
         return this.selectedColumn;
     }
 
     /**
      * getter for the row on the map that the
      * user currently has selected
+     * NOTE: never use this without first checking
+     * the boolean that says whether this row is valid
+     * data that can be used or not
      * @return int the row on the map that the
      * user currently has selected
      */
     private int getSelectedRow() {
-        if (!this.getATileIsSelected()) {
-            // TODO change these to an exception that makes more sense
-            // my custom exception class should probably be a subclass
-            // of runtime exception
-            throw new RuntimeException("tried to get selected row "
-                + "when a tile was not selected");
-        }
         return this.selectedRow;
     }
 
@@ -462,15 +485,130 @@ public class GameplayScreenController extends Controller {
         );
     }
 
+    /**
+     * moves the currently hovered Tile to the north by
+     * one Tile on the condition that we are not at the
+     * north most row on the Map
+     */
+    private void moveHoverNorthByOne() {
+        // grab the currently hovered row
+        int hoveredRow = this.getHoveredRow();
+
+        // check if we are at the north-most row on the
+        // map, if so then we don't move the hover north
+        if (0 < hoveredRow) {
+            this.setHoveredRow(hoveredRow - 1);
+        }
+    }
+
+    /**
+     * moves the currently hovered Tile to the east by
+     * one Tile on the condition that we are not at the
+     * east most column on the Map
+     */
+    private void moveHoverEastByOne() {
+        // grab the currently hovered column
+        int hoveredColumn = this.getHoveredColumn();
+
+        // check if we are at the east-most column on the
+        // map, if so then we don't move the hovered Tile east
+        if (Facade.getMaxXIndex(this.getMap()) > hoveredColumn) {
+            this.setHoveredColumn(hoveredColumn + 1);
+        }
+    }
+
+    /**
+     * moves the currently hovered Tile to the south by
+     * one Tile on the condition that we are not at the
+     * south most row on the Map
+     */
+    private void moveHoverSouthByOne() {
+        // grab the currently hovered row
+        int hoveredRow = this.getHoveredRow();
+
+        // check if we are at the south-most column on the
+        // map, if so then we don't move the hovered Tile south
+        if (Facade.getMaxYIndex(this.getMap()) > hoveredRow) {
+            this.setHoveredRow(hoveredRow + 1);
+        }
+    }
+
+    /**
+     * moves the currently hovered Tile to the west by
+     * one Tile on the condition that we are not at the
+     * west most column on the Map
+     */
+    private void moveHoverWestByOne() {
+        // grab the currently hovered column
+        int hoveredColumn = this.getHoveredColumn();
+
+        // check if we are at the west-most column on the
+        // map, if so then we don't move the hovered Tile west
+        if (0 < hoveredColumn) {
+            this.setHoveredColumn(hoveredColumn - 1);
+        }
+    }
+
+
     //// key handler methods ////
 
     /**
+     * executes when the 'w' key is pressed,
+     * it moves the currently hovered Tile to the
+     * north by one Tile if we aren't at the edge of
+     * the Map
+     */
+    private void wKeyPressed() {
+        this.moveHoverNorthByOne();
+    }
+
+    /**
+     * executes when the 'a' key is pressed,
+     * it moves the currently hovered Tile to the
+     * west by one Tile if we aren't at the edge of
+     * the Map
+     */
+    private void aKeyPressed() {
+        this.moveHoverWestByOne();
+    }
+
+    /**
+     * executes when the 's' key is pressed,
+     * it moves the currently hovered Tile to the
+     * south by one Tile if we aren't at the edge of
+     * the Map
+     */
+    private void sKeyPressed() {
+        this.moveHoverSouthByOne();
+    }
+
+    /**
+     * executes when the 'd' key is pressed,
+     * it moves the currently hovered Tile to the
+     * east by one Tile if we aren't at the edge of
+     * the Map
+     */
+    private void dKeyPressed() {
+        this.moveHoverEastByOne();
+    }
+
+    /**
      * executes when enter key is pressed,
-     * for now it just prints something out
-     * for testing purposes
+     * selects the currently hovered Tile
      */
     private void enterKeyPressed() {
-        System.out.println("Enter key pressed");
+        this.selectTile(
+            this.getHoveredColumn(),
+            this.getHoveredRow()
+        );
+    }
+
+    /**
+     * executes when the esc key is pressed,
+     * unselects the currently selected Tile
+     */
+    private void escapeKeyPressed() {
+        this.unselectCurrentTile();
     }
 
     /**
@@ -480,14 +618,6 @@ public class GameplayScreenController extends Controller {
      */
     private void enterKeyReleased() {
         System.out.println("Enter key released");
-    }
-
-    /**
-     * executes when the esc key is pressed,
-     * unselects the currently selected Tile
-     */
-    private void escapeKeyPressed() {
-        this.unselectCurrentTile();
     }
 
 

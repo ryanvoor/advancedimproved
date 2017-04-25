@@ -123,6 +123,25 @@ public class Facade {
             color,
             alpha
         );
+    }
 
+    /**
+     * returns the maximum possible X Index of the
+     * parameter Map
+     * @param map the Map whose max X Index we will return
+     * @return int the max X Index of the parameter Map
+     */
+    public static int getMaxXIndex(Map map) {
+        return map.getMaxXIndex();
+    }
+
+    /**
+     * returns the maximum possible Y Index of the
+     * parameter Map
+     * @param map the Map whose max Y Index we will return
+     * @return int the max Y Index of the parameter Map
+     */
+    public static int getMaxYIndex(Map map) {
+        return map.getMaxYIndex();
     }
 }
