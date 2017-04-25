@@ -29,52 +29,85 @@ public class Tile {
 
     // instance variables
     private TileOccupant occupant;
+    private TileOccupant invader;
     private Terrain terrain;
     private Building building;
+
+
+    //////////////////
+    // Constructors //
+    //////////////////
 
     /**
      * constructor for the Tile class, takes in
      * a Terrain, TileOccupant, and building
      * @param terrain the terrain of this Tile
-     * @param occupant the occupant of this Tile
      * @param building the building of this Tile
+     * @param occupant the occupant of this Tile
+     * @param invader the invading TileOccupant of this Tile
      */
-    public Tile(Terrain terrain, TileOccupant occupant, Building building) {
+    public Tile(Terrain terrain, Building building, TileOccupant occupant, TileOccupant invader) {
         this.terrain  = terrain;
-        this.occupant = occupant;
         this.building = building;
+        this.occupant = occupant;
+        this.invader  = invader;
+    }
+
+    /**
+     * constructor for the Tile class, just takes in
+     * a Terrain and 2 TileOccupants, this
+     * Tile will have no building
+     * @param terrain the terrain of this Tile
+     * @param occupant the occupant of this Tile
+     * @param invader the invading TileOccupant of this Tile
+     */
+    public Tile(Terrain terrain, TileOccupant occupant, TileOccupant invader) {
+        this(terrain, null, occupant, invader);
+    }
+
+    /**
+     * constructor for the Tile class, just takes in
+     * a Terrain, a Building, and a TileOccupant, this
+     * Tile will have no invader
+     * @param terrain the terrain of this Tile
+     * @param building the building of this Tile
+     * @param occupant the occupant of this Tile
+     */
+    public Tile(Terrain terrain, Building building, TileOccupant occupant) {
+        this(terrain, building, occupant, null);
     }
 
     /**
      * constructor for the Tile class, just takes in
      * a Terrain and a TileOccupant, this
-     * Tile will have no building
+     * Tile will have no building and no invader
      * @param terrain the terrain of this Tile
      * @param occupant the occupant of this Tile
      */
     public Tile(Terrain terrain, TileOccupant occupant) {
-        this(terrain, occupant, null);
+        this(terrain, null, occupant, null);
     }
 
     /**
      * constructor for the Tile class, just takes in
      * a Terrain and a Building, this
-     * Tile will have no occupant
+     * Tile will have no occupant and no invader
      * @param terrain the terrain of this Tile
      * @param building the building of this Tile
      */
     public Tile(Terrain terrain, Building building) {
-        this(terrain, null, building);
+        this(terrain, building, null, null);
     }
 
     /**
      * constructor for the Tile class, just takes in
-     * a Terrain, this Tile will have no occupant or building
+     * a Terrain, this Tile will have no occupant, building, or invader
      * @param terrain the terrain of this Tile
      */
     public Tile(Terrain terrain) {
-        this(terrain, null, null);
+        this(terrain, null, null, null);
     }
+
 
     /////////////
     // Getters //
@@ -99,11 +132,11 @@ public class Tile {
     }
 
     /**
-     * the getter for the occupant of this Tile
-     * @return TileOccupant the occupant of this Tile
+     * the getter for the Terrain of this Tile
+     * @return Terrain the Terrain of this Tile
      */
-    public TileOccupant getOccupant() {
-        return this.occupant;
+    public Terrain getTerrain() {
+        return this.terrain;
     }
 
     /**
@@ -115,19 +148,19 @@ public class Tile {
     }
 
     /**
-     * the getter for the Terrain of this Tile
-     * @return Terrain the Terrain of this Tile
+     * the getter for the occupant of this Tile
+     * @return TileOccupant the occupant of this Tile
      */
-    public Terrain getTerrain() {
-        return this.terrain;
+    public TileOccupant getOccupant() {
+        return this.occupant;
     }
 
     /**
-     * returns whether this Tile has an occupant
-     * @return boolean whether this Tile has an occupant
+     * the getter for the invader of this Tile
+     * @return TileOccupant the invader of this Tile
      */
-    public boolean hasOccupant() {
-        return null != this.getOccupant();
+    public TileOccupant getInvader() {
+        return this.invader;
     }
 
     /**
@@ -138,16 +171,34 @@ public class Tile {
         return null != this.getBuilding();
     }
 
+
+    /**
+     * returns whether this Tile has an occupant
+     * @return boolean whether this Tile has an occupant
+     */
+    public boolean hasOccupant() {
+        return null != this.getOccupant();
+    }
+
+    /**
+     * returns whether this Tile has an invader
+     * @return boolean whether this Tile has an invader
+     */
+    public boolean hasInvader() {
+        return null != this.getInvader();
+    }
+
+
     /////////////
     // Setters //
     /////////////
 
     /**
-     * setter for the occupant of this Tile
-     * @param occupant the occupant to be placed on this Tile
+     * setter for the Terrain of this Tile
+     * @param terrain the Terrain to be placed on this Tile
      */
-    public void setOccupant(TileOccupant occupant) {
-        this.occupant = occupant;
+    public void setTerrain(Terrain terrain) {
+        this.terrain = terrain;
     }
 
     /**
@@ -159,12 +210,21 @@ public class Tile {
     }
 
     /**
-     * setter for the Terrain of this Tile
-     * @param terrain the Terrain to be placed on this Tile
+     * setter for the occupant of this Tile
+     * @param occupant the occupant to be placed on this Tile
      */
-    public void setTerrain(Terrain terrain) {
-        this.terrain = terrain;
+    public void setOccupant(TileOccupant occupant) {
+        this.occupant = occupant;
     }
+
+    /**
+     * setter for the invader of this Tile
+     * @param invader the invader to be placed on this Tile
+     */
+    public void setInvader(TileOccupant invader) {
+        this.invader = invader;
+    }
+
 
     //////////////////
     // Real Methods //

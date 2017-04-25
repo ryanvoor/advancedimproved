@@ -1001,7 +1001,7 @@ public class Map implements Iterable<Tile> {
                     = getBuildingFromFileString(buildingString);
 
                 // fill in variable tiles with Tile objects
-                Tile newTile = new Tile(terrain, occupant, building);
+                Tile newTile = new Tile(terrain, building, occupant);
                 tiles.get(y).add(x, newTile);
 
                 x++;
