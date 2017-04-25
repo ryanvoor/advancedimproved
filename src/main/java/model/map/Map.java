@@ -982,26 +982,29 @@ public class Map implements Iterable<Tile> {
         for (ArrayList<String> row: fileStrings) {
             for (String chunk: row) {
                 // make sure each chunk has at least 2 characters
-                if (chunk.length() < 3) {
+                if (chunk.length() < 4) {
                     throw new MapFileReadException(
                         "csv entry did not have enough letters for a tile");
                 }
 
                 // pull out the terrain and occupant characters
                 String terrainString  = chunk.substring(0, 1);
-                String occupantString = chunk.substring(1, 2);
-                String buildingString = chunk.substring(2, 3);
+                String buildingString = chunk.substring(1, 2);
+                String occupantString = chunk.substring(2, 3);
+                String invaderString  = chunk.substring(3, 4);
 
                 // get the actual java objects that relate to the strings
                 Terrain terrain
                     = getTerrainFromFileString(terrainString);
-                TileOccupant occupant
-                    = getTileOccupantFromFileString(occupantString);
                 Building building
                     = getBuildingFromFileString(buildingString);
+                TileOccupant occupant
+                    = getTileOccupantFromFileString(occupantString);
+                TileOccupant invader
+                    = getTileOccupantFromFileString(invaderString);
 
                 // fill in variable tiles with Tile objects
-                Tile newTile = new Tile(terrain, building, occupant);
+                Tile newTile = new Tile(terrain, building, occupant, invader);
                 tiles.get(y).add(x, newTile);
 
                 x++;
