@@ -8,6 +8,10 @@ import model.drawable.building.Building;
 import model.drawable.terrain.Terrain;
 import model.drawable.tileOccupant.TileOccupant;
 
+// TODO temp
+import model.drawable.tileOccupant.Infantry;
+import model.drawable.tileOccupant.Sniper;
+
 // TODO at some point this class will need to be modified to hold
 // multiple occupants so the gameplay dream can be implemented
 // TODO also alter this class to hold buildings since those will
@@ -255,7 +259,36 @@ public class Tile {
         // it and draw it on the canvas
         if (this.hasOccupant()) {
             TileOccupant occupant = this.getOccupant();
-            occupant.draw(canvas, xPosition, yPosition, time);
+            if (this.hasInvader()) {
+                TileOccupant invader  = this.getInvader();
+                int halfWidthOfATile  = Tile.getWidthOfATileInPixels() / 2;
+                int halfHeightOfATile = Tile.getHeightOfATileInPixels() / 2;
+                invader.draw(
+                    canvas,
+                    xPosition,
+                    yPosition,
+                    halfWidthOfATile,
+                    halfHeightOfATile,
+                    time
+                );
+                occupant.draw(
+                    canvas,
+                    xPosition + halfWidthOfATile,
+                    yPosition + halfHeightOfATile,
+                    halfWidthOfATile,
+                    halfHeightOfATile,
+                    time
+                );
+            } else {
+                occupant.draw(
+                    canvas,
+                    xPosition,
+                    yPosition,
+                    Tile.getWidthOfATileInPixels(),
+                    Tile.getHeightOfATileInPixels(),
+                    time
+                );
+            }
         }
     }
 }

@@ -1092,6 +1092,7 @@ public class Map implements Iterable<Tile> {
             toBeReturned = null;
             break;
         case "i":
+            System.out.println("making an infantry");
             toBeReturned = new Infantry();
             break;
         case "s":

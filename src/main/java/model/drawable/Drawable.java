@@ -35,6 +35,8 @@ public interface Drawable {
     /**
      * draws the Image that should be drawn to represent this class
      * onto the parameter canvas at the paremeter x and y coordinates
+     * overloaded with a version that takes in a variable width and
+     * height rather than using the width and height of a Tile as defaults
      * @param canvas the canvas upon which to drawn the image
      * @param xPosition the X-coordinate of the location on
      * the canvas where the top left corner of the image should be
@@ -43,6 +45,32 @@ public interface Drawable {
      * @param time the time used to calculate animation images
      */
     default void draw(Canvas canvas, int xPosition, int yPosition, long time) {
+        this.draw(
+            canvas,
+            xPosition,
+            yPosition,
+            Tile.getWidthOfATileInPixels(),
+            Tile.getHeightOfATileInPixels(),
+            time
+        );
+    }
+
+    /**
+     * draws the Image that should be drawn to represent this class
+     * onto the parameter canvas at the paremeter x and y coordinates,
+     * overloaded with a version that does not take in a width and height
+     * and uses the width and height of a Tile as defaults
+     * @param canvas the canvas upon which to drawn the image
+     * @param xPosition the X-coordinate of the location on
+     * the canvas where the top left corner of the image should be
+     * @param yPosition the Y-coordinate of the location on
+     * the canvas where the top left corner of the image should be
+     * @param width the width in pixels that should be used to draw the image
+     * @param height the height in pixels that should be used to draw the image
+     * @param time the time used to calculate animation images
+     */
+    default void draw(Canvas canvas, int xPosition, int yPosition,
+        int width, int height, long time) {
         // grab graphics context object and image
         GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
         Image image = this.getImage(time);
@@ -55,8 +83,8 @@ public interface Drawable {
             xPosition,
             yPosition,
             // width and height of the image to be drawn
-            Tile.getWidthOfATileInPixels(),
-            Tile.getHeightOfATileInPixels()
+            width,
+            height
         );
     }
 }
