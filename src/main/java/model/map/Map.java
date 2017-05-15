@@ -428,9 +428,8 @@ public class Map implements Iterable<Tile> {
         // movement cost of that Tile
         Tile adjacentTile
             = this.getTileFromIndices(adjacentXIndex, adjacentYIndex);
-        Terrain adjacentTerrain = adjacentTile.getTerrain();
         int adjacentMovementCost
-            = adjacentTerrain.getMovementCost(occupantInQuestion);
+            = adjacentTile.getMovementCost(occupantInQuestion);
 
         // grab current adjacent tile distance and current tile distance
         int currentAdjacentTileDistance
@@ -442,6 +441,15 @@ public class Map implements Iterable<Tile> {
         // adjacent tile distance
         int potentialAdjacentTileDistance
             = currentTileDistance + adjacentMovementCost;
+
+        // to avoid dealing with Integer overflows we just check
+        // for if the adjacentMovementCost is Integer.MAX_VALUE
+        if (Integer.MAX_VALUE == adjacentMovementCost) {
+            // this will cause logic to work as intended rather
+            // than sometimes ending up with a potential distance
+            // of Integer.MIN_VALUE or -1 etc. (int overflows are weird)
+            potentialAdjacentTileDistance = Integer.MAX_VALUE;
+        }
 
         // if this new distance to the adjacent tile is shorter than
         // the existing distance to the adjacent tile

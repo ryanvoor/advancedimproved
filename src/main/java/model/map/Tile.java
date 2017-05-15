@@ -8,10 +8,6 @@ import model.drawable.building.Building;
 import model.drawable.terrain.Terrain;
 import model.drawable.tileOccupant.TileOccupant;
 
-// TODO temp
-import model.drawable.tileOccupant.Infantry;
-import model.drawable.tileOccupant.Sniper;
-
 // TODO at some point this class will need to be modified to hold
 // multiple occupants so the gameplay dream can be implemented
 // TODO also alter this class to hold buildings since those will
@@ -190,6 +186,33 @@ public class Tile {
      */
     public boolean hasInvader() {
         return null != this.getInvader();
+    }
+
+    /**
+     * returns the movement cost that a unit needs to pay
+     * to move onto this Tile
+     * returns Integer.MAX_VALUE if the Unit cannot move
+     * onto this Tile
+     * @param unit the TileOccupant that is attempting
+     * to move onto this Tile
+     * @return int the movement cost that the parameter
+     * unit must pay in order to move onto this Tile
+     */
+    public int getMovementCost(TileOccupant tileOccupant) {
+        // TODO this will need to be updated once I set up the multiple player
+        // controls so that you can move INTO but not PAST a Tile
+        // with an enemy unit
+
+        // set up our return value
+        int movementCost = Integer.MAX_VALUE;
+
+        // don't let a unit move onto this Tile if it is occupied
+        if (!this.hasOccupant()) {
+            Terrain terrain = this.getTerrain();
+            movementCost = terrain.getMovementCost(tileOccupant);
+        }
+
+        return movementCost;
     }
 
 
