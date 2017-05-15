@@ -8,10 +8,6 @@ import model.drawable.building.Building;
 import model.drawable.terrain.Terrain;
 import model.drawable.tileOccupant.TileOccupant;
 
-// TODO at some point this class will need to be modified to hold
-// multiple occupants so the gameplay dream can be implemented
-// TODO also alter this class to hold buildings since those will
-// be separate from TileOccupants soon enough (if not already)
 // TODO I should consider only allowing buildings to be built on certain
 // Tiles as a balance/map design tool
 

@@ -187,9 +187,6 @@ public class Map implements Iterable<Tile> {
      */
     public void tintTilesToWhichOccupantCanMove(Canvas mapCanvas,
         int xIndex, int yIndex, Color color, double alpha) {
-        // TODO modify movement range stuff so unit cannot move past a
-        // Tile occupied by another unit
-
         // grab the Tile that the occupant we care about is sitting on
         // so we can grab the TileOCcupant from that Tile
         // so we can grab the movement range from that TileOccupant
