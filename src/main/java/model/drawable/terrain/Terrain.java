@@ -1,5 +1,9 @@
 package model.drawable.terrain;
 
+// java standard library imports
+import java.util.ArrayList;
+import java.util.Arrays;
+
 // javafx imports
 import javafx.scene.image.Image;
 
@@ -12,13 +16,7 @@ import model.drawable.tileOccupant.TileOccupant;
  * on a particular Tile on the Map
  * @author Ryan Voor
  */
-public abstract class Terrain implements Drawable {
-
-    // TODO once I have the ability to know here a unit CAN move
-    // then I will implement the ability to move units
-
-    // constants
-    private String imageFileUrl;
+public abstract class Terrain extends Drawable {
 
     /**
      * constructor for the Terrain class
@@ -26,7 +24,7 @@ public abstract class Terrain implements Drawable {
      * that will be displayed for this Terrain
      */
     public Terrain(String imageFileUrl) {
-        this.imageFileUrl = imageFileUrl;
+        super(new ArrayList<String>(Arrays.asList(imageFileUrl)));
     }
 
     //////////////////////
@@ -59,13 +57,6 @@ public abstract class Terrain implements Drawable {
      * should be displayed for this Terrain
      */
     public String getImageFileUrl() {
-        return this.imageFileUrl;
-    }
-
-    @Override
-    public Image getImage(long time) {
-        // just ignore the time parameter since this
-        // class isn't animated
-        return new Image(this.getImageFileUrl());
+        return this.getImageFileUrls().get(0);
     }
 }
