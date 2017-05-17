@@ -12,6 +12,8 @@ import java.util.Arrays;
  */
 public class Infantry extends FootMovementUnit {
 
+    // TODO make them move since I now know where they can move!
+
     /**
      * constructor for the Infantry class
      */
